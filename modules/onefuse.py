@@ -96,39 +96,38 @@ def main():
 
 def naming(module, ofm, onefuse_inputs, resource_path, unique_field):
   """
+  - name: OneFuse Get Name
+    hosts: localhost
+    gather_facts: false
+    tasks:
+    - name: Get Machine Name
+      onefuse:
+        policy_name: '{{ policy_name }}'
+        module: naming
+        state: present
+        tracking_id: '{{ tracking_id  | default(omit) }}'
+        template_properties: '{{ template_properties }}'
+      delegate_to: localhost
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
 
-- name: OneFuse Get Name
-  hosts: localhost
-  gather_facts: false
-   tasks:
-  - name: Get Machine Name
-    onefuse:
-      policy_name: '{{ policy_name }}'
-      module: naming
-      state: present
-      tracking_id: '{{ tracking_id  | default(omit) }}'
-      template_properties: '{{ template_properties }}'
-    delegate_to: localhost
-    register: output
-  - name: Output Results
-    debug:
-      msg: '{{ output }}'
 
-
-  - name: OneFuse Release Name
-  hosts: '{{ ansible_hosts }}'
-  gather_facts: false
-  tasks:
-  - name: Deprovision Name
-    onefuse:
-      object_name: '{{ onefuse_name_id | default(omit) }}'
-      module: naming
-      state: absent
-    delegate_to: localhost
-    register: output
-  - name: Output Results
-    debug:
-      msg: '{{ output }}'
+    - name: OneFuse Release Name
+    hosts: '{{ ansible_hosts }}'
+    gather_facts: false
+    tasks:
+    - name: Deprovision Name
+      onefuse:
+        object_name: '{{ onefuse_name_id | default(omit) }}'
+        module: naming
+        state: absent
+      delegate_to: localhost
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
   """
   def present(module, ofm, onefuse_inputs):
  
