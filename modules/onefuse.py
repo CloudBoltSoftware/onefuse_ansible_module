@@ -272,7 +272,7 @@ EXAMPLES = '''
 
 import json
 from ansible.module_utils.basic import *
-from ansible.module_utils.onefuse.admin import OneFuseManager
+from onefuse.admin import OneFuseManager
 from ansible.module_utils.onefuse.config import username, password, host
 import sys
 from os import path
