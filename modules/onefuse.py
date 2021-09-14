@@ -115,10 +115,10 @@ def naming(module, ofm, onefuse_inputs, resource_path, unique_field):
 
 
     - name: OneFuse Release Name
-    hosts: '{{ ansible_hosts }}'
-    gather_facts: false
-    tasks:
-    - name: Deprovision Name
+      hosts: '{{ ansible_hosts }}'
+      gather_facts: false
+      tasks:
+      - name: Deprovision Name
       onefuse:
         object_name: '{{ onefuse_name_id | default(omit) }}'
         module: naming
@@ -164,6 +164,40 @@ def naming(module, ofm, onefuse_inputs, resource_path, unique_field):
 # OneFuse IPAM Module
 
 def ipam(module, ofm, onefuse_inputs, resource_path, unique_field):
+  """
+  - name: OneFuse Get IPAM
+    hosts: localhost
+    gather_facts: false
+    tasks:
+  - name: Get IP Address
+    onefuse:
+      policy_name: '{{ policy_name }}'
+      module: ipam
+      state: present
+      name: '{{ name }}'
+      tracking_id: '{{ tracking_id | default(omit) }}'
+      template_properties: '{{ template_properties }}'
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+
+  - name: OneFuse Release IPAM
+    hosts: '{{ ansible_hosts }}'
+    gather_facts: false
+    tasks:
+    - name: Reclaim IP Address
+      onefuse:
+        object_name: '{{ onefuse_ipam_id | default(omit) }}'
+        module: ipam
+        state: absent
+      delegate_to: localhost
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
+  """
 
   def present(module, ofm, onefuse_inputs):
 
