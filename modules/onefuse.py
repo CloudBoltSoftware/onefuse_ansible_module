@@ -377,6 +377,40 @@ def ad(module, ofm, onefuse_inputs, resource_path, unique_field):
 
 def scripting(module, ofm, onefuse_inputs, resource_path, unique_field):
 
+  """
+  - name: OneFuse Scripting provision
+    hosts: localhost
+    gather_facts: false
+    tasks:
+      - name: Execute Script
+        onefuse:
+          policy_name: '{{ policy_name }}'
+          module: scripting
+          state: present
+          tracking_id: '{{ tracking_id  | default(omit) }}'
+          template_properties: {{ template_properties }}
+        delegate_to: localhost
+        register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+
+  - name: OneFuse Scripting desprovision
+    hosts: '{{ ansible_host }}'
+    gather_facts: false
+    tasks:
+    - name: Deprovision Script Deployment
+      onefuse:
+        object_name: '{{ onefuse_script_id | default(omit) }}'
+        module: scripting
+        state: absent
+      delegate_to: localhost
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
+  """
+
   def present(module, ofm, onefuse_inputs):
 
     try:
