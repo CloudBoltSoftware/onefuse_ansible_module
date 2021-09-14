@@ -1,49 +1,14 @@
-- name: Machine Name
-  hosts: localhost
+- name: OneFuse Naming
+  hosts: '{{ ansible_hosts }}'
   gather_facts: false
-  vars:
-    policy_name: machine
-    template_properties: {
-      nameGroup: 'pp',
-      hostname: '{{ name | default(omit) }}',
-      nameLocation: 'atl',
-      nameEnv: 'p',
-      nameOS: 'l',
-      nameApp: 'wp',
-      dnsSuffix: 'infoblox851.sovlabs.net',
-      ouGroup: 'PiedPiper',
-      ouEnv: 'PRD',
-      sgEnv: 'prod'
-    }
   tasks:
-  - name: Get Machine Name
+  - name: Deprovision Name
     onefuse:
-      policy_name: '{{ policy_name }}'
+      object_name: '{{ onefuse_name_id | default(omit) }}'
       module: naming
-      state: present
-      tracking_id: '{{ tracking_id  | default(omit) }}'
-      template_properties: '{{ template_properties }}'
+      state: absent
     delegate_to: localhost
     register: output
   - name: Output Results
     debug:
       msg: '{{ output }}'
-  - name: "Set Stats"
-    set_stats:
-        data:
-          onefuse_name: '{{ onefuse_name }}'
-          name: '{{ name }}'
-          name_Suffix: '{{ name_suffix }}'
-          fqdn: '{{ fqdn }}'
-          onefuse_name_id: '{{ onefuse_name_id }}'
-          tracking_id: '{{ tracking_id }}'
-
-
-
-
-
-
-
-
-
-

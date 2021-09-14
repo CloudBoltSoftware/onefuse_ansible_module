@@ -2,19 +2,41 @@
 
 DOCUMENTATION = '''
 ---
-module: version_change
-short_description: bump semantic version numbers
+module: OneFuse
+short_description: OneFuse module for Ansible.  This module enables consumption of OneFUse integrations by Ansible.
 '''
 EXAMPLES = '''
-- hosts: localhost
+- name: OneFuse Get Name
+  hosts: localhost
+  gather_facts: false
+   tasks:
+  - name: Get Machine Name
+    onefuse:
+      policy_name: '{{ policy_name }}'
+      module: naming
+      state: present
+      tracking_id: '{{ tracking_id  | default(omit) }}'
+      template_properties: '{{ template_properties }}'
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+- name: OneFuse Release Name
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
   tasks:
-  - name: Test that my module works
-    version_change: 
-      version_name: "Before"
-      version_no:  1.1.1 
-      unchanged_value: "This will pass through"
-    register: result
-  - debug: var=result    
+  - name: Deprovision Name
+    onefuse:
+      object_name: '{{ onefuse_name_id | default(omit) }}'
+      module: naming
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'    
 '''
 
 
@@ -32,8 +54,8 @@ sys.path.append(ROOT_PATH)
 def main():
 
   onefuse_inputs = {
-    "policy_name": {"required": False, "type": "str"},
-    "template_properties": {"required": False, "type": "dict"},
+    "policy_name": {"required": True, "type": "str"},
+    "template_properties": {"required": True, "type": "dict"},
     "tracking_id": {"required": False, "type": "str"},
     "object_name": {"required": False, "type": "str"},
     "module": {"required": False, "type": "str"},
@@ -43,7 +65,7 @@ def main():
     "limit": {"required": False, "type": "str"},
     "hosts": {"required": False, "type": "str"},
     "deployment_name": {"required": False, "type": "str"},    
-    "state": {"required": False, "type": "str"}
+    "state": {"required": True, "type": "str"}
   }
 
   module = AnsibleModule(argument_spec=onefuse_inputs)
@@ -73,7 +95,41 @@ def main():
 # OneFuse Naming Module
 
 def naming(module, ofm, onefuse_inputs, resource_path, unique_field):
+  """
 
+- name: OneFuse Get Name
+  hosts: localhost
+  gather_facts: false
+   tasks:
+  - name: Get Machine Name
+    onefuse:
+      policy_name: '{{ policy_name }}'
+      module: naming
+      state: present
+      tracking_id: '{{ tracking_id  | default(omit) }}'
+      template_properties: '{{ template_properties }}'
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+
+  - name: OneFuse Release Name
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Deprovision Name
+    onefuse:
+      object_name: '{{ onefuse_name_id | default(omit) }}'
+      module: naming
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+  """
   def present(module, ofm, onefuse_inputs):
  
     try:
