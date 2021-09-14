@@ -65,7 +65,7 @@ def main():
     ansible_tower(module, ofm, onefuse_inputs, resource_path="ansibleTowerDeployments", unique_field="id")
   elif module.params['module'] == 'vra':
     vra(module, ofm, onefuse_inputs, resource_path="vraDeployments", unique_field="id")
-  else:
+  elif module.params['module'] == 'pluggable':
     plugable_module(module, ofm, onefuse_inputs, resource_path="moduleManagedObjects", unique_field="id")
   else:
     print("A OneFuse Module with the name " + module.params['module'] + " does not exists!")
