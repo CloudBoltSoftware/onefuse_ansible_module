@@ -446,6 +446,50 @@ def scripting(module, ofm, onefuse_inputs, resource_path, unique_field):
 
 def cmdb(module, ofm, onefuse_inputs, resource_path, unique_field):
 
+  """
+  - name: Create ServiceNow CMDB Record
+    hosts: localhost
+    gather_facts: false
+    tasks:
+  - name: Create CMDB CI Record
+    onefuse:
+     policy_name: '{{ policy_name }}'
+     module: cmdb
+     state: present
+     tracking_id: '{{ tracking_id  | default(omit) }}'
+     template_properties: {
+      OneFuse_VmNic0.dnsSuffix: '{{ name_suffix }}',
+      OneFuse_VmNic0.hostname: '{{ name }}',
+      OneFuse_VmNic0.fqdn: '',
+      OneFuse_VmNic0.ipAddress: '{{ ip_address }}',
+      OneFuse_VmHardware.platformUuid: '',
+      OneFuse_VmHardware.cpuCount: '2',
+      OneFuse_VmHardware.totalStorageGB: '16',
+      OneFuse_VmHardware.memoryMB: '1024',
+      OneFuse_VmHardware.powerState: 'on'
+     }
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+  - name: OneFuse CMDB
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Remove CMDB Record
+    onefuse:
+      object_name: '{{ onefuse_cmdb_id | default(omit) }}'
+      module: cmdb
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+  """
   def present(module, ofm, onefuse_inputs):
 
     try:
@@ -479,6 +523,42 @@ def cmdb(module, ofm, onefuse_inputs, resource_path, unique_field):
 # OneFuse Ansible Module
 
 def ansible_tower(module, ofm, onefuse_inputs, resource_path, unique_field):
+
+  """
+  - name: OneFuse Ansible Tower Provision
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Run Ansible Tower Playbook
+    onefuse:
+      policy_name: '{{ policy_name }}'
+      module: ansible_tower
+      state: present
+      limit: ''
+      hosts: ''
+      tracking_id: '{{ tracking_id  | default(omit) }}'
+      template_properties: {{ template_properties }}
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+  - name: OneFuse Ansible Tower Deprovision
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Remove Ansible Tower Object
+    onefuse:
+      object_name: '{{ onefuse_ansible_id | default(omit) }}'
+      module: ansible_tower
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+  """
 
   def present(module, ofm, onefuse_inputs):
 
