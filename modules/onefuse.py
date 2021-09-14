@@ -236,6 +236,44 @@ def ipam(module, ofm, onefuse_inputs, resource_path, unique_field):
 # OneFuse DNS Module
 
 def dns(module, ofm, onefuse_inputs, resource_path, unique_field):
+  """
+  - name: OneFuse Create DNS Record
+    hosts: localhost
+    gather_facts: false
+    tasks:
+  -   name: Register DNS
+      onefuse:
+        policy_name: '{{ policy_name }}'
+        module: dns
+        state: present
+        name: '{{ name }}'
+        value: '{{ ip_address }}'
+        zones: '{{ name_suffix }}'
+        tracking_id: '{{ tracking_id | default(omit) }}'
+        template_properties: '{{ template_properties }}'
+      delegate_to: localhost
+      register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+
+
+  - name: OneFuse Release DNS Record
+    hosts: '{{ ansible_hosts }}'
+    gather_facts: false
+    tasks:
+    - name: Remove DNS Record
+      onefuse:
+        object_name: '{{ onefuse_dns_id | default(omit) }}'
+        module: dns
+        state: absent
+      delegate_to: localhost
+      register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+  """
+
 
   def present(module, ofm, onefuse_inputs):
     try:
