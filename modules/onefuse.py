@@ -596,6 +596,40 @@ def ansible_tower(module, ofm, onefuse_inputs, resource_path, unique_field):
 
 def vra(module, ofm, onefuse_inputs, resource_path, unique_field):
 
+  """
+  - name: Deploy vRA Blueprint
+    hosts: localhost
+    gather_facts: false
+    tasks:
+    - name: Deploy vRA Blueprint
+      onefuse:
+        policy_name: '{{ policy_name }}'
+        deployment_name: '{{ deployment_name }}'
+        module: vra
+        state: present
+        tracking_id: '{{ tracking_id  | default(omit) }}'
+        template_properties: {{ template_properties }}
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
+
+  - name: Destroy vRA Blueprint
+    hosts: '{{ ansible_host }}'
+    gather_facts: false
+    tasks:
+  - name: Deprovision vRA Deployment
+    onefuse:
+      object_name: '{{ onefuse_vra_id | default(omit) }}'
+      module: vra
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+  """
+
   def present(module, ofm, onefuse_inputs):
 
     try:
