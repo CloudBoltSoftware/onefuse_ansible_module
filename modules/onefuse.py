@@ -36,7 +36,239 @@ EXAMPLES = '''
     register: output
   - name: Output Results
     debug:
-      msg: '{{ output }}'    
+      msg: '{{ output }}'
+
+  - name: OneFuse Get IPAM
+    hosts: localhost
+    gather_facts: false
+    tasks:
+  - name: Get IP Address
+    onefuse:
+      policy_name: '{{ policy_name }}'
+      module: ipam
+      state: present
+      name: '{{ name }}'
+      tracking_id: '{{ tracking_id | default(omit) }}'
+      template_properties: '{{ template_properties }}'
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+
+  - name: OneFuse Release IPAM
+    hosts: '{{ ansible_hosts }}'
+    gather_facts: false
+    tasks:
+    - name: Reclaim IP Address
+      onefuse:
+        object_name: '{{ onefuse_ipam_id | default(omit) }}'
+        module: ipam
+        state: absent
+      delegate_to: localhost
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
+
+  - name: OneFuse Create DNS Record
+    hosts: localhost
+    gather_facts: false
+    tasks:
+  -   name: Register DNS
+      onefuse:
+        policy_name: '{{ policy_name }}'
+        module: dns
+        state: present
+        name: '{{ name }}'
+        value: '{{ ip_address }}'
+        zones: '{{ name_suffix }}'
+        tracking_id: '{{ tracking_id | default(omit) }}'
+        template_properties: '{{ template_properties }}'
+      delegate_to: localhost
+      register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+
+
+  - name: OneFuse Release DNS Record
+    hosts: '{{ ansible_hosts }}'
+    gather_facts: false
+    tasks:
+    - name: Remove DNS Record
+      onefuse:
+        object_name: '{{ onefuse_dns_id | default(omit) }}'
+        module: dns
+        state: absent
+      delegate_to: localhost
+      register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+
+    - name: AD Create
+      hosts: localhost
+      gather_facts: false
+      tasks:
+      - name: Create AD Record
+        onefuse:
+          policy_name: '{{ policy_name }}'
+          module: ad
+          state: present
+          name: '{{ name }}'
+          tracking_id: '{{ tracking_id  | default(omit) }}'
+          template_properties: '{{ template_properties }}'
+        register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+
+    - name: AD
+      hosts: '{{ ansible_hosts }}'
+      gather_facts: false
+      tasks:
+      - name: Deprovision Ad Computer Object
+        onefuse:
+          object_name: '{{ onefuse_ad_id | default(omit) }}'
+          module: ad
+          state: absent
+        delegate_to: localhost
+        register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+
+  - name: OneFuse Scripting provision
+    hosts: localhost
+    gather_facts: false
+    tasks:
+      - name: Execute Script
+        onefuse:
+          policy_name: '{{ policy_name }}'
+          module: scripting
+          state: present
+          tracking_id: '{{ tracking_id  | default(omit) }}'
+          template_properties: {{ template_properties }}
+        delegate_to: localhost
+        register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+
+  - name: OneFuse Scripting desprovision
+    hosts: '{{ ansible_host }}'
+    gather_facts: false
+    tasks:
+    - name: Deprovision Script Deployment
+      onefuse:
+        object_name: '{{ onefuse_script_id | default(omit) }}'
+        module: scripting
+        state: absent
+      delegate_to: localhost
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
+
+  - name: Create ServiceNow CMDB Record
+    hosts: localhost
+    gather_facts: false
+    tasks:
+  - name: Create CMDB CI Record
+    onefuse:
+     policy_name: '{{ policy_name }}'
+     module: cmdb
+     state: present
+     tracking_id: '{{ tracking_id  | default(omit) }}'
+     template_properties: {{ template_properties }}
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+  - name: OneFuse CMDB
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Remove CMDB Record
+    onefuse:
+      object_name: '{{ onefuse_cmdb_id | default(omit) }}'
+      module: cmdb
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+  - name: OneFuse Ansible Tower Provision
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Run Ansible Tower Playbook
+    onefuse:
+      policy_name: '{{ policy_name }}'
+      module: ansible_tower
+      state: present
+      limit: ''
+      hosts: ''
+      tracking_id: '{{ tracking_id  | default(omit) }}'
+      template_properties: {{ template_properties }}
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+  - name: OneFuse Ansible Tower Deprovision
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Remove Ansible Tower Object
+    onefuse:
+      object_name: '{{ onefuse_ansible_id | default(omit) }}'
+      module: ansible_tower
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'      
+
+  - name: Deploy vRA Blueprint
+    hosts: localhost
+    gather_facts: false
+    tasks:
+    - name: Deploy vRA Blueprint
+      onefuse:
+        policy_name: '{{ policy_name }}'
+        deployment_name: '{{ deployment_name }}'
+        module: vra
+        state: present
+        tracking_id: '{{ tracking_id  | default(omit) }}'
+        template_properties: {{ template_properties }}
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
+
+  - name: Destroy vRA Blueprint
+    hosts: '{{ ansible_host }}'
+    gather_facts: false
+    tasks:
+  - name: Deprovision vRA Deployment
+    onefuse:
+      object_name: '{{ onefuse_vra_id | default(omit) }}'
+      module: vra
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
 '''
 
 
@@ -457,17 +689,7 @@ def cmdb(module, ofm, onefuse_inputs, resource_path, unique_field):
      module: cmdb
      state: present
      tracking_id: '{{ tracking_id  | default(omit) }}'
-     template_properties: {
-      OneFuse_VmNic0.dnsSuffix: '{{ name_suffix }}',
-      OneFuse_VmNic0.hostname: '{{ name }}',
-      OneFuse_VmNic0.fqdn: '',
-      OneFuse_VmNic0.ipAddress: '{{ ip_address }}',
-      OneFuse_VmHardware.platformUuid: '',
-      OneFuse_VmHardware.cpuCount: '2',
-      OneFuse_VmHardware.totalStorageGB: '16',
-      OneFuse_VmHardware.memoryMB: '1024',
-      OneFuse_VmHardware.powerState: 'on'
-     }
+     template_properties: {{ template_properties }}
     delegate_to: localhost
     register: output
   - name: Output Results
@@ -488,7 +710,6 @@ def cmdb(module, ofm, onefuse_inputs, resource_path, unique_field):
   - name: Output Results
     debug:
       msg: '{{ output }}'
-
   """
   def present(module, ofm, onefuse_inputs):
 
