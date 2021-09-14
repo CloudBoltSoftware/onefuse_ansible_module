@@ -5,6 +5,11 @@ Ansible module for consuming OneFuse integration within Ansible Core and Ansible
 
 Place the contents of the modules folder in your Ansible Modules Folder:
 
+## Install OneFuse Python Package
+
+```
+pip install -i onefuse
+```
 ## Ansible Tower Typical Modules Folder Path
 ```
 /usr/share/ansible/plugins/modules
