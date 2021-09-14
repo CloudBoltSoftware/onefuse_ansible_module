@@ -1,0 +1,46 @@
+# Run Ansible Tower Job
+
+- name: OneFuse Ansible Tower
+  hosts: localhost
+  gather_facts: false
+  vars:
+    policy_name: Ansible_Onefuse_Dev_Policy
+    template_properties: {
+      nameGroup: 'pp',
+      hostname: 'atlpllb001',
+      nameLocation: 'atl',
+      nameEnv: 'p',
+      nameOS: 'l',
+      nameApp: 'wp',
+      dnsSuffix: 'infoblox851.sovlabs.net',
+      ouGroup: 'PiedPiper',
+      ouEnv: 'PRD',
+      sgEnv: 'prod'
+    }
+  tasks:
+  - name: Run Ansible Tower Playbook
+    onefuse:
+      policy_name: '{{ policy_name }}'
+      module: ansible_tower
+      state: present
+      limit: ''
+      hosts: ''
+      tracking_id: '{{ tracking_id  | default(omit) }}'
+      template_properties: {
+       nameGroup: 'pp',
+       nameLocation: 'atl',
+       nameEnv: 'p',
+       nameOS: 'l',
+       nameApp: 'wp'
+        }
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+  - name: "Pass Output to workflow"
+    set_stats:
+        data:
+         onefuse_ansible_tower: '{{ onefuse_ansible_tower }}'
+         onefuse_ansible_tower_id: '{{ onefuse_ansible_tower_id }}'
+         tracking_id: '{{ tracking_id }}'

@@ -1,0 +1,14 @@
+- name: OneFuse Reclaim IPAM
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Reclaim IP Address
+    onefuse:
+      object_name: '{{ onefuse_ipam_id | default(omit) }}'
+      module: ipam
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'

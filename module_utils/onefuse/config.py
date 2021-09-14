@@ -1,3 +1,3 @@
-username = 'admin'
-password = 'admin'
-host = 'selab-1f-dev-1-4.cblabsales.net'
+username = 'username_here
+password = 'password_here'
+host = 'host_here'

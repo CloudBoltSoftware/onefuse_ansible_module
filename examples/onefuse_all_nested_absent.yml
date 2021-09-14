@@ -1,0 +1,50 @@
+# OneFuse Module Deprovision
+
+# Deprovision name (OneFuse)
+- name: Destroy OneFuse Naming
+  import_playbook: onefuse_naming_deprov.yml
+  when: onefuse_name_id is defined
+
+# Deprovision IP Address (OneFuse)
+- name: Destroy OneFuse IPAM
+  import_playbook: onefuse_ipam_deprov.yml
+  when: onefuse_ipam_id is defined
+
+# Deprovision DNS Records (OneFuse)
+- name: Destroy OneFuse DNS
+  import_playbook: onefuse_dns_deprov.yml
+  when: onefuse_dns_id is defined
+
+# Deprovision Computer Object in Active Directory (OneFuse)
+- name: Destroy OneFuse AD
+  import_playbook: onefuse_ad_deprov.yml
+  when: onefuse_ad_id is defined
+
+# Deprovision vSphere VM (vSphere)
+- name: Destroy vSphere VM
+  import_playbook: destroy_vsphere_vm.yml
+  when: vm_uuid is defined
+
+# Deprovision ServiceNow CMDB CI Record (OneFuse)
+- name: Destroy OneFuse ServiceNow CMDB CI Record
+  import_playbook: onefuse_cmdb_deprov.yml
+  when: onefuse_cmdb_id is defined
+
+# Deprovision Ansible Tower Job Template (OneFuse)
+- name: OneFuse run Ansible Tower Job Template
+  import_playbook: onefuse_ansible_deprov.yml
+  when: onefuse_ansible_tower_id is defined
+
+# Deprovision Script execution (OneFuse)
+- name: OneFuse run scripting deprovision
+  import_playbook: onefuse_scripting_deprov.yml
+  when: onefuse_scripting_tower_id is defined
+
+# Deprovision vRA execution (OneFuse)
+- name: OneFuse run vradeprovision
+  import_playbook: onefuse_vra_deprov.yml
+  when: onefuse_vra_tower_id is defined
+
+# Update host in Ansible Inventory
+#- name: Remove Ansible Host
+#  import_playbook: ansible_remove_from_inventory.yml

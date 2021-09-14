@@ -1,0 +1,43 @@
+# Create AD Computer Object
+
+- name: AD Create
+  hosts: localhost
+  gather_facts: false
+  vars:
+    policy_name: prod
+    name: atlpllb001
+    name_suffix: infoblox851.sovlabs.net
+    template_properties: {
+      nameGroup: 'pp',
+      hostname: 'atlpllb001',
+      nameLocation: 'atl',
+      nameEnv: 'p',
+      nameOS: 'l',
+      nameApp: 'wp',
+      dnsSuffix: 'infoblox851.sovlabs.net',
+      ouGroup: 'PiedPiper',
+      ouEnv: 'PRD',
+      sgEnv: 'prod'
+    }
+  tasks:
+  - name: Create AD Record
+    onefuse:
+     policy_name: '{{ policy_name }}'
+     module: ad
+     state: present
+     name: '{{ name }}'
+     tracking_id: '{{ tracking_id  | default(omit) }}'
+     template_properties: '{{ template_properties }}'
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+  - name: "Pass Output to workflow"
+    set_stats:
+        data:
+         onefuse_ad: '{{ onefuse_ad }}'
+         onefuse_ad_id: '{{ onefuse_ad_id }}'
+         tracking_id: '{{ tracking_id }}'
+
+
+

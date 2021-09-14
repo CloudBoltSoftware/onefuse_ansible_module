@@ -1,0 +1,14 @@
+- name: OneFuse DNS
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Remove DNS Record
+    onefuse:
+      object_name: '{{ onefuse_dns_id | default(omit) }}'
+      module: dns
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'

@@ -1,0 +1,14 @@
+- name: OneFuse vRA
+  hosts: '{{ ansible_host }}'
+  gather_facts: false
+  tasks:
+  - name: Deprovision vRA Deployment
+    onefuse:
+      object_name: '{{ onefuse_vra_id | default(omit) }}'
+      module: vra
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'

@@ -1,0 +1,14 @@
+- name: AD
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Deprovision Ad Computer Object
+    onefuse:
+      object_name: '{{ onefuse_ad_id | default(omit) }}'
+      module: ad
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'

@@ -1,0 +1,14 @@
+- name: OneFuse Ansible Tower
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Remove Ansible Tower Object
+    onefuse:
+      object_name: '{{ onefuse_ansible_id | default(omit) }}'
+      module: ansible_tower
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'

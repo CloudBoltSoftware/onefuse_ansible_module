@@ -1,0 +1,45 @@
+# Deploy vRA Blueprint
+
+- name: Deploy vRA
+  hosts: localhost
+  gather_facts: false
+  vars:
+    policy_name: cloud_server
+    deployment_name: sid-ansible-test-1-14
+    template_properties: {
+      nameGroup: 'pp',
+      hostname: 'atlpllb001',
+      nameLocation: 'atl',
+      nameEnv: 'p',
+      nameOS: 'l',
+      nameApp: 'wp',
+      dnsSuffix: 'infoblox851.sovlabs.net',
+      ouGroup: 'PiedPiper',
+      ouEnv: 'PRD',
+      sgEnv: 'prod'
+    }
+  tasks:
+  - name: Deploy vRA Blueprint
+    onefuse:
+     policy_name: '{{ policy_name }}'
+     deployment_name: '{{ deployment_name }}'
+     module: vra
+     state: present
+     tracking_id: '{{ tracking_id  | default(omit) }}'
+     template_properties: {
+       env: 'test',
+       app: 'linux',
+       size: 'small',
+       location: 'atl',
+       deploymentOwner: 'mbombard'
+        }
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+  - name: "Pass Output to workflow"
+    set_stats:
+        data:
+         onefuse_vra: '{{ onefuse_vra }}'
+         onefuse_vra_id: '{{ onefuse_vra_id }}'
+         tracking_id: '{{ tracking_id }}'

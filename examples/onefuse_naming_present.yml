@@ -1,0 +1,14 @@
+- name: OneFuse Naming
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Deprovision Name
+    onefuse:
+      object_name: '{{ onefuse_name_id | default(omit) }}'
+      module: naming
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'

@@ -1,0 +1,14 @@
+- name: OneFuse CMDB
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  tasks:
+  - name: Remove CMDB Record
+    onefuse:
+      object_name: '{{ onefuse_cmdb_id | default(omit) }}'
+      module: cmdb
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'

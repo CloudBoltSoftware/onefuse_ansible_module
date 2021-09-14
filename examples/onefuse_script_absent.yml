@@ -1,0 +1,14 @@
+- name: OneFuse Scripting
+  hosts: '{{ ansible_host }}'
+  gather_facts: false
+  tasks:
+  - name: Deprovision Script Deployment
+    onefuse:
+      object_name: '{{ onefuse_script_id | default(omit) }}'
+      module: scripting
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
