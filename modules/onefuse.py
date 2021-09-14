@@ -274,7 +274,6 @@ def dns(module, ofm, onefuse_inputs, resource_path, unique_field):
           msg: '{{ output }}'
   """
 
-
   def present(module, ofm, onefuse_inputs):
     try:
       response_json = ofm.provision_dns(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
@@ -308,6 +307,40 @@ def dns(module, ofm, onefuse_inputs, resource_path, unique_field):
 # OneFuse AD Module
 
 def ad(module, ofm, onefuse_inputs, resource_path, unique_field):
+
+  """
+    - name: AD Create
+      hosts: localhost
+      gather_facts: false
+      tasks:
+      - name: Create AD Record
+        onefuse:
+          policy_name: '{{ policy_name }}'
+          module: ad
+          state: present
+          name: '{{ name }}'
+          tracking_id: '{{ tracking_id  | default(omit) }}'
+          template_properties: '{{ template_properties }}'
+        register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+
+    - name: AD
+      hosts: '{{ ansible_hosts }}'
+      gather_facts: false
+      tasks:
+      - name: Deprovision Ad Computer Object
+        onefuse:
+          object_name: '{{ onefuse_ad_id | default(omit) }}'
+          module: ad
+          state: absent
+        delegate_to: localhost
+        register: output
+      - name: Output Results
+        debug:
+          msg: '{{ output }}'
+  """
 
   def present(module, ofm, onefuse_inputs):
 
