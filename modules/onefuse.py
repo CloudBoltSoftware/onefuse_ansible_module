@@ -66,6 +66,8 @@ def main():
   elif module.params['module'] == 'vra':
     vra(module, ofm, onefuse_inputs, resource_path="vraDeployments", unique_field="id")
   else:
+    plugable_module(module, ofm, onefuse_inputs, resource_path="moduleManagedObjects", unique_field="id")
+  else:
     print("A OneFuse Module with the name " + module.params['module'] + " does not exists!")
 
 # OneFuse Naming Module
@@ -161,7 +163,7 @@ def dns(module, ofm, onefuse_inputs, resource_path, unique_field):
   def absent(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
-       onefuse_object = ofm.get_object_by_unique_field(resource_path="dnsReservations", field_value=module.params["object_name"], field=unique_field)  
+       onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
     except:
       remove_exception(module, onefuse_inputs)    
     
@@ -196,7 +198,7 @@ def ad(module, ofm, onefuse_inputs, resource_path, unique_field):
   def absent(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
-      onefuse_object = ofm.get_object_by_unique_field(resource_path="microsoftADComputerAccounts", field_value=module.params["object_name"], field=unique_field)  
+      onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
     except:
       remove_exception(module, onefuse_inputs)    
     
@@ -231,7 +233,7 @@ def scripting(module, ofm, onefuse_inputs, resource_path, unique_field):
   def absent(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
-      onefuse_object = ofm.get_object_by_unique_field(resource_path="scriptingDeployments", field_value=module.params["object_name"], field=unique_field)  
+      onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
     except:
       remove_exception(module, onefuse_inputs)    
     
@@ -266,7 +268,7 @@ def cmdb(module, ofm, onefuse_inputs, resource_path, unique_field):
   def absent(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
-      onefuse_object = ofm.get_object_by_unique_field(resource_path="servicenowCMDBDeployments", field_value=module.params["object_name"], field=unique_field)  
+      onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
     except:
       remove_exception(module, onefuse_inputs)    
     
@@ -301,7 +303,7 @@ def ansible_tower(module, ofm, onefuse_inputs, resource_path, unique_field):
   def absent(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
-      onefuse_object = ofm.get_object_by_unique_field(resource_path="ansibleTowerDeployments", field_value=module.params["object_name"], field=unique_field)  
+      onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
     except:
       remove_exception(module, onefuse_inputs)    
     
@@ -336,7 +338,7 @@ def vra(module, ofm, onefuse_inputs, resource_path, unique_field):
   def absent(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
-      onefuse_object = ofm.get_object_by_unique_field(policy_path="vraDeployments", field_value=module.params["object_name"], field=unique_field)  
+      onefuse_object = ofm.get_object_by_unique_field(policy_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
     except:
       remove_exception(module, onefuse_inputs)    
     
@@ -350,6 +352,42 @@ def vra(module, ofm, onefuse_inputs, resource_path, unique_field):
     module.exit_json(changed=True, path=path)
   except Exception as e:
       module.fail_json(msg=to_native(e), exception="vRA State Error")
+
+# OneFuse Pluggable Module
+
+def plugable_module(module, ofm, onefuse_inputs, resource_path, unique_field):
+
+  def present(module, ofm, onefuse_inputs):
+ 
+    try:
+      response_json = ofm.provision_module(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
+                tracking_id=module.params['tracking_id'])
+    except:
+      create_exception(module, onefuse_inputs)
+
+    ansible_facts={ "onefuse_name": response_json, 
+            "name": response_json["name"], "fqdn": f'{response_json["name"]}.{response_json["dnsSuffix"]}', "tracking_id":response_json["trackingId"], 
+            "onefuse_name_id": response_json["id"], "name_suffix": response_json["dnsSuffix"] }
+    
+    create_success(module, onefuse_inputs, response_json, ansible_facts)
+
+  def absent(module, ofm, onefuse_inputs, resource_path, unique_field):
+
+    try:
+      onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
+    except:
+      remove_exception(module, onefuse_inputs)    
+
+    remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
+
+  try:
+    if module.params['state'] == 'absent':
+      absent(module, ofm, onefuse_inputs, resource_path, unique_field)
+    else:  
+      present(module, ofm, onefuse_inputs)
+      module.exit_json(changed=True, path=path)
+  except Exception as e:
+    module.fail_json(msg=to_native(e), exception="exception")
 
 # OneFuse Managed object for module does not exists
 
