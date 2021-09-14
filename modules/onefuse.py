@@ -38,7 +38,7 @@ EXAMPLES = '''
     debug:
       msg: '{{ output }}'
 
-  - name: OneFuse Get IPAM
+- name: OneFuse Get IPAM
     hosts: localhost
     gather_facts: false
     tasks:
@@ -55,8 +55,7 @@ EXAMPLES = '''
     debug:
       msg: '{{ output }}'
 
-
-  - name: OneFuse Release IPAM
+- name: OneFuse Release IPAM
     hosts: '{{ ansible_hosts }}'
     gather_facts: false
     tasks:
@@ -71,28 +70,27 @@ EXAMPLES = '''
       debug:
         msg: '{{ output }}'
 
-  - name: OneFuse Create DNS Record
+- name: OneFuse Create DNS Record
     hosts: localhost
     gather_facts: false
     tasks:
-  -   name: Register DNS
-      onefuse:
-        policy_name: '{{ policy_name }}'
-        module: dns
-        state: present
-        name: '{{ name }}'
-        value: '{{ ip_address }}'
-        zones: '{{ name_suffix }}'
-        tracking_id: '{{ tracking_id | default(omit) }}'
-        template_properties: '{{ template_properties }}'
-      delegate_to: localhost
-      register: output
-      - name: Output Results
+    - name: Register DNS
+        onefuse:
+          policy_name: '{{ policy_name }}'
+          module: dns
+          state: present
+          name: '{{ name }}'
+          value: '{{ ip_address }}'
+          zones: '{{ name_suffix }}'
+          tracking_id: '{{ tracking_id | default(omit) }}'
+          template_properties: '{{ template_properties }}'
+        delegate_to: localhost
+        register: output
+        - name: Output Results
         debug:
           msg: '{{ output }}'
 
-
-  - name: OneFuse Release DNS Record
+- name: OneFuse Release DNS Record
     hosts: '{{ ansible_hosts }}'
     gather_facts: false
     tasks:
@@ -139,7 +137,7 @@ EXAMPLES = '''
         debug:
           msg: '{{ output }}'
 
-  - name: OneFuse Scripting provision
+- name: OneFuse Scripting provision
     hosts: localhost
     gather_facts: false
     tasks:
@@ -156,7 +154,7 @@ EXAMPLES = '''
         debug:
           msg: '{{ output }}'
 
-  - name: OneFuse Scripting desprovision
+- name: OneFuse Scripting desprovision
     hosts: '{{ ansible_host }}'
     gather_facts: false
     tasks:
@@ -171,39 +169,39 @@ EXAMPLES = '''
       debug:
         msg: '{{ output }}'
 
-  - name: Create ServiceNow CMDB Record
+- name: Create ServiceNow CMDB Record
     hosts: localhost
     gather_facts: false
     tasks:
-  - name: Create CMDB CI Record
-    onefuse:
-     policy_name: '{{ policy_name }}'
-     module: cmdb
-     state: present
-     tracking_id: '{{ tracking_id  | default(omit) }}'
-     template_properties: {{ template_properties }}
-    delegate_to: localhost
-    register: output
-  - name: Output Results
-    debug:
-      msg: '{{ output }}'
-
-  - name: OneFuse CMDB
-  hosts: '{{ ansible_hosts }}'
-  gather_facts: false
-  tasks:
-  - name: Remove CMDB Record
-    onefuse:
-      object_name: '{{ onefuse_cmdb_id | default(omit) }}'
+    - name: Create CMDB CI Record
+      onefuse:
+      policy_name: '{{ policy_name }}'
       module: cmdb
-      state: absent
-    delegate_to: localhost
-    register: output
-  - name: Output Results
-    debug:
+      state: present
+      tracking_id: '{{ tracking_id  | default(omit) }}'
+      template_properties: {{ template_properties }}
+      delegate_to: localhost
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
+
+- name: Remove ServiceNow CMDB Record
+    hosts: '{{ ansible_hosts }}'
+    gather_facts: false
+    tasks:
+    - name: Remove CMDB Record
+      onefuse:
+        object_name: '{{ onefuse_cmdb_id | default(omit) }}'
+        module: cmdb
+        state: absent
+      delegate_to: localhost
+      register: output
+    - name: Output Results
+      debug:
       msg: '{{ output }}'
 
-  - name: OneFuse Ansible Tower Provision
+- name: OneFuse Ansible Tower Provision
   hosts: localhost
   gather_facts: false
   tasks:
@@ -222,7 +220,7 @@ EXAMPLES = '''
     debug:
       msg: '{{ output }}'
 
-  - name: OneFuse Ansible Tower Deprovision
+- name: OneFuse Ansible Tower Deprovision
   hosts: '{{ ansible_hosts }}'
   gather_facts: false
   tasks:
@@ -237,7 +235,7 @@ EXAMPLES = '''
     debug:
       msg: '{{ output }}'      
 
-  - name: Deploy vRA Blueprint
+- name: Deploy vRA Blueprint
     hosts: localhost
     gather_facts: false
     tasks:
@@ -254,7 +252,7 @@ EXAMPLES = '''
       debug:
         msg: '{{ output }}'
 
-  - name: Destroy vRA Blueprint
+- name: Destroy vRA Blueprint
     hosts: '{{ ansible_host }}'
     gather_facts: false
     tasks:
