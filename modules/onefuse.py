@@ -918,6 +918,72 @@ def plugable_module(module, ofm, onefuse_inputs, resource_path, unique_field):
   except Exception as e:
     module.fail_json(msg=to_native(e), exception="exception")
 
+# Create Tracking ID
+
+def create_tracking_id(module, ofm):
+
+  """
+  - name: Deploy vRA Blueprint
+    hosts: localhost
+    gather_facts: false
+    tasks:
+    - name: Deploy vRA Blueprint
+      onefuse:
+        policy_name: '{{ policy_name }}'
+        deployment_name: '{{ deployment_name }}'
+        module: vra
+        state: present
+        tracking_id: '{{ tracking_id  | default(omit) }}'
+        template_properties: {{ template_properties }}
+      register: output
+    - name: Output Results
+      debug:
+        msg: '{{ output }}'
+
+  - name: Destroy vRA Blueprint
+    hosts: '{{ ansible_host }}'
+    gather_facts: false
+    tasks:
+  - name: Deprovision vRA Deployment
+    onefuse:
+      object_name: '{{ onefuse_vra_id | default(omit) }}'
+      module: vra
+      state: absent
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+  """
+
+  def present(module, ofm):
+
+    try:
+      tracking_id = ofm.create_tracking_id()
+ 
+
+    ansible_facts={ "tracking_id": tracking_id }
+    
+    create_success(module, onefuse_inputs, response_json, ansible_facts)
+
+  def absent(module, ofm, onefuse_inputs, resource_path, unique_field):
+
+    try:
+      onefuse_object = ofm.get_object_by_unique_field(policy_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)    
+    
+    remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
+    
+  try:
+    if module.params['state'] == 'absent':
+      absent(module, ofm)
+    else:  
+      present(module, ofm)
+    module.exit_json(changed=True, path=path)
+  except Exception as e:
+      module.fail_json(msg=to_native(e), exception="exception")
+
 # OneFuse Managed object for module does not exists
 
 def remove_exception(module, onefuse_inputs):
