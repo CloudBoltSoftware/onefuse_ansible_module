@@ -3,7 +3,7 @@
 DOCUMENTATION = '''
 ---
 module: OneFuse
-short_description: OneFuse module for Ansible.  This module enables consumption of OneFUse integrations by Ansible.
+short_description: OneFuse module for Ansible.  This module enables consumption of OneFuse integrations by Ansible.
 '''
 EXAMPLES = '''
 - name: OneFuse Get Name
@@ -364,8 +364,8 @@ def naming(module, ofm, onefuse_inputs, resource_path, unique_field):
     try:
       response_json = ofm.provision_naming(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
                 tracking_id=module.params['tracking_id'])
-    except:
-      create_exception(module, onefuse_inputs)
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
 
     ansible_facts={ "onefuse_name": response_json, 
             "name": response_json["name"], "fqdn": f'{response_json["name"]}.{response_json["dnsSuffix"]}', "tracking_id":response_json["trackingId"], 
@@ -377,8 +377,8 @@ def naming(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
       onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
-    except:
-      remove_exception(module, onefuse_inputs)    
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)
 
     remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
 
@@ -430,11 +430,12 @@ def ipam(module, ofm, onefuse_inputs, resource_path, unique_field):
   """
 
   def present(module, ofm, onefuse_inputs):
-
-    response_json = ofm.provision_ipam(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
+    try:
+      response_json = ofm.provision_ipam(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
             hostname=module.params['name'], tracking_id=module.params['tracking_id'])
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
 
-    
     ansible_facts={ "onefuse_ipam": response_json, 
                   "ip_address": response_json["ipAddress"], "netmask": response_json["netmask"], 
                   "gateway": response_json["gateway"], "subnet": response_json["subnet"], 
@@ -442,15 +443,16 @@ def ipam(module, ofm, onefuse_inputs, resource_path, unique_field):
                   "primary_dns": response_json["primaryDns"], "secondary_dns": response_json["secondaryDns"], 
                   "nic_label": response_json["nicLabel"], "dns_search_suffixes": response_json["dnsSearchSuffixes"], 
                   "onefuse_ipam_id": response_json["id"], "tracking_id": response_json['trackingId'] }
-    
+
+
     create_success(module, onefuse_inputs, response_json, ansible_facts)
 
   def absent(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
       onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
-    except:
-      remove_exception(module, onefuse_inputs)    
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)    
     
     remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
     
@@ -508,8 +510,8 @@ def dns(module, ofm, onefuse_inputs, resource_path, unique_field):
     try:
       response_json = ofm.provision_dns(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
             name=module.params['name'], value=module.params['value'], zones=module.params['zones'], tracking_id=module.params['tracking_id'])
-    except:
-      create_exception(module, onefuse_inputs)
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
 
     ansible_facts={ "onefuse_dns": response_json, 
           "onefuse_dns_id":response_json['id'], "tracking_id": response_json['trackingId'] }
@@ -520,8 +522,8 @@ def dns(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
        onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
-    except:
-      remove_exception(module, onefuse_inputs)    
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)    
     
     remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
 
@@ -577,8 +579,8 @@ def ad(module, ofm, onefuse_inputs, resource_path, unique_field):
     try:
       response_json = ofm.provision_ad(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
               name=module.params['name'], tracking_id=module.params['tracking_id'])
-    except:
-      create_exception(module, onefuse_inputs)
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
 
     ansible_facts={ "onefuse_ad": response_json, 
                     "onefuse_ad_id": response_json['id'], "tracking_id": response_json['trackingId'] }
@@ -589,8 +591,8 @@ def ad(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
       onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
-    except:
-      remove_exception(module, onefuse_inputs)    
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)    
     
     remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
     
@@ -646,8 +648,8 @@ def scripting(module, ofm, onefuse_inputs, resource_path, unique_field):
     try:
       response_json = ofm.provision_scripting(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
               tracking_id=module.params['tracking_id'])
-    except:
-      create_exception(module, onefuse_inputs)
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
 
     ansible_facts={ "onefuse_script": response_json, 
             "onefuse_script_id": response_json["id"], "tracking_id": response_json['trackingId'] }
@@ -658,8 +660,8 @@ def scripting(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
       onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
-    except:
-      remove_exception(module, onefuse_inputs)    
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)    
     
     remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
     
@@ -714,8 +716,8 @@ def cmdb(module, ofm, onefuse_inputs, resource_path, unique_field):
     try:
       response_json = ofm.provision_cmdb(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
               tracking_id=module.params['tracking_id'])
-    except:
-      create_exception(module, onefuse_inputs)
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
 
     ansible_facts={ "onefuse_cmdb": response_json, 
             "onefuse_cmdb_id": response_json["id"], "tracking_id": response_json['trackingId'] }
@@ -726,8 +728,8 @@ def cmdb(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
       onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
-    except:
-      remove_exception(module, onefuse_inputs)    
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)    
     
     remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
     
@@ -785,8 +787,8 @@ def ansible_tower(module, ofm, onefuse_inputs, resource_path, unique_field):
       response_json = ofm.provision_ansible_tower(policy_name=module.params['policy_name'], 
           template_properties=module.params['template_properties'], hosts=module.params['hosts'], 
           limit=module.params['limit'], tracking_id=module.params['tracking_id'])
-    except:
-      create_exception(module, onefuse_inputs)
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
 
     ansible_facts={ "onefuse_ansible_tower": response_json, 
                 "onefuse_ansible_tower_id": response_json["id"], "tracking_id": response_json['trackingId'] }
@@ -797,8 +799,8 @@ def ansible_tower(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
       onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
-    except:
-      remove_exception(module, onefuse_inputs)    
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)    
     
     remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
     
@@ -854,8 +856,8 @@ def vra(module, ofm, onefuse_inputs, resource_path, unique_field):
     try:
       response_json = ofm.provision_vra(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
               deployment_name=module.params['deployment_name'], tracking_id=module.params['tracking_id'])
-    except:
-      create_exception(module, onefuse_inputs)
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
 
     ansible_facts={ "onefuse_vra": response_json, 
               "onefuse_vra_id": response_json["id"], "tracking_id": response_json['trackingId'] }
@@ -866,8 +868,8 @@ def vra(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
       onefuse_object = ofm.get_object_by_unique_field(policy_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
-    except:
-      remove_exception(module, onefuse_inputs)    
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)    
     
     remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
     
@@ -889,8 +891,8 @@ def plugable_module(module, ofm, onefuse_inputs, resource_path, unique_field):
     try:
       response_json = ofm.provision_module(policy_name=module.params['policy_name'], template_properties=module.params['template_properties'], 
                 tracking_id=module.params['tracking_id'])
-    except:
-      create_exception(module, onefuse_inputs)
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
 
     ansible_facts={ "onefuse_name": response_json, 
             "name": response_json["name"], "fqdn": f'{response_json["name"]}.{response_json["dnsSuffix"]}', "tracking_id":response_json["trackingId"], 
@@ -902,8 +904,8 @@ def plugable_module(module, ofm, onefuse_inputs, resource_path, unique_field):
 
     try:
       onefuse_object = ofm.get_object_by_unique_field(resource_path=resource_path, field_value=module.params["object_name"], field=unique_field)  
-    except:
-      remove_exception(module, onefuse_inputs)    
+    except Exception as err:
+      remove_exception(module, onefuse_inputs, err)    
 
     remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object)
 
@@ -936,7 +938,7 @@ def remove_exception(module, onefuse_inputs):
   result['original_message'] = ""
   result['message'] = f'OneFuse {module.params["module"]} object with id {module.params["object_name"]} does not exist'
   result['changed'] = False
-  module.exit_json(changed=False, response=result)
+  module.fail_json(msg=to_native(error), exception="exception")
 
 # OneFuse Managed object successfully removed
 
@@ -967,7 +969,7 @@ def remove_success(module, ofm, onefuse_inputs, resource_path, onefuse_object):
 
 # OneFuse Managed object for module could not be created
 
-def create_exception(module, onefuse_inputs):
+def create_exception(module, onefuse_inputs, error):
   result = dict(
   changed=False,
   original_message='',
@@ -985,7 +987,7 @@ def create_exception(module, onefuse_inputs):
   result['original_message'] = ""
   result['message'] = f'OneFuse {module.params["module"]} could not create object.'
   result['changed'] = False
-  module.exit_json(changed=False, response=result)
+  module.fail_json(msg=to_native(error), exception="exception")
 
 # OneFuse Managed object for module created successfully
 
