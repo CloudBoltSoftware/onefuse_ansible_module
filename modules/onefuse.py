@@ -284,8 +284,8 @@ sys.path.append(ROOT_PATH)
 def main():
 
   onefuse_inputs = {
-    "policy_name": {"required": True, "type": "str"},
-    "template_properties": {"required": True, "type": "dict"},
+    "policy_name": {"required": False, "type": "str"},
+    "template_properties": {"required": False, "type": "dict"},
     "tracking_id": {"required": False, "type": "str"},
     "object_name": {"required": False, "type": "str"},
     "module": {"required": False, "type": "str"},
@@ -295,7 +295,7 @@ def main():
     "limit": {"required": False, "type": "str"},
     "hosts": {"required": False, "type": "str"},
     "deployment_name": {"required": False, "type": "str"},    
-    "state": {"required": True, "type": "str"}
+    "state": {"required": False, "type": "str"}
   }
 
   module = AnsibleModule(argument_spec=onefuse_inputs)
@@ -319,6 +319,8 @@ def main():
     vra(module, ofm, onefuse_inputs, resource_path="vraDeployments", unique_field="id")
   elif module.params['module'] == 'pluggable':
     plugable_module(module, ofm, onefuse_inputs, resource_path="moduleManagedObjects", unique_field="id")
+  elif module.params['module'] == 'property_toolkit':
+    property_toolkit(module, ofm, onefuse_inputs)
   else:
     print("A OneFuse Module with the name " + module.params['module'] + " does not exists!")
 
@@ -367,9 +369,7 @@ def naming(module, ofm, onefuse_inputs, resource_path, unique_field):
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_name": response_json, 
-            "name": response_json["name"], "fqdn": f'{response_json["name"]}.{response_json["dnsSuffix"]}', "tracking_id":response_json["trackingId"], 
-            "onefuse_name_id": response_json["id"], "name_suffix": response_json["dnsSuffix"] }
+    ansible_facts={ "onefuse_name": response_json }
     
     create_success(module, onefuse_inputs, response_json, ansible_facts)
 
@@ -436,13 +436,7 @@ def ipam(module, ofm, onefuse_inputs, resource_path, unique_field):
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_ipam": response_json, 
-                  "ip_address": response_json["ipAddress"], "netmask": response_json["netmask"], 
-                  "gateway": response_json["gateway"], "subnet": response_json["subnet"], 
-                  "network": response_json["network"], "dns_suffix": response_json["dnsSuffix"], 
-                  "primary_dns": response_json["primaryDns"], "secondary_dns": response_json["secondaryDns"], 
-                  "nic_label": response_json["nicLabel"], "dns_search_suffixes": response_json["dnsSearchSuffixes"], 
-                  "onefuse_ipam_id": response_json["id"], "tracking_id": response_json['trackingId'] }
+    ansible_facts={ "onefuse_ipam": response_json }
 
 
     create_success(module, onefuse_inputs, response_json, ansible_facts)
@@ -513,8 +507,7 @@ def dns(module, ofm, onefuse_inputs, resource_path, unique_field):
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_dns": response_json, 
-          "onefuse_dns_id":response_json['id'], "tracking_id": response_json['trackingId'] }
+    ansible_facts={ "onefuse_dns": response_json }
 
     create_success(module, onefuse_inputs, response_json, ansible_facts)
     
@@ -582,8 +575,7 @@ def ad(module, ofm, onefuse_inputs, resource_path, unique_field):
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_ad": response_json, 
-                    "onefuse_ad_id": response_json['id'], "tracking_id": response_json['trackingId'] }
+    ansible_facts={ "onefuse_ad": response_json }
 
     create_success(module, onefuse_inputs, response_json, ansible_facts)
 
@@ -651,8 +643,7 @@ def scripting(module, ofm, onefuse_inputs, resource_path, unique_field):
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_script": response_json, 
-            "onefuse_script_id": response_json["id"], "tracking_id": response_json['trackingId'] }
+    ansible_facts={ "onefuse_script": response_json }
     
     create_success(module, onefuse_inputs, response_json, ansible_facts)
 
@@ -719,8 +710,7 @@ def cmdb(module, ofm, onefuse_inputs, resource_path, unique_field):
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_cmdb": response_json, 
-            "onefuse_cmdb_id": response_json["id"], "tracking_id": response_json['trackingId'] }
+    ansible_facts={ "onefuse_cmdb": response_json }
 
     create_success(module, onefuse_inputs, response_json, ansible_facts)
 
@@ -790,8 +780,7 @@ def ansible_tower(module, ofm, onefuse_inputs, resource_path, unique_field):
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_ansible_tower": response_json, 
-                "onefuse_ansible_tower_id": response_json["id"], "tracking_id": response_json['trackingId'] }
+    ansible_facts={ "onefuse_ansible_tower": response_json }
     
     create_success(module, onefuse_inputs, response_json, ansible_facts)
 
@@ -859,8 +848,7 @@ def vra(module, ofm, onefuse_inputs, resource_path, unique_field):
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_vra": response_json, 
-              "onefuse_vra_id": response_json["id"], "tracking_id": response_json['trackingId'] }
+    ansible_facts={ "onefuse_vra": response_json }
     
     create_success(module, onefuse_inputs, response_json, ansible_facts)
 
@@ -894,9 +882,7 @@ def plugable_module(module, ofm, onefuse_inputs, resource_path, unique_field):
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_name": response_json, 
-            "name": response_json["name"], "fqdn": f'{response_json["name"]}.{response_json["dnsSuffix"]}', "tracking_id":response_json["trackingId"], 
-            "onefuse_name_id": response_json["id"], "name_suffix": response_json["dnsSuffix"] }
+    ansible_facts={ "onefuse_pluggable": response_json }
     
     create_success(module, onefuse_inputs, response_json, ansible_facts)
 
@@ -958,8 +944,7 @@ def create_tracking_id(module, ofm):
 
   def present(module, ofm):
 
-    try:
-      tracking_id = ofm.create_tracking_id()
+    tracking_id = ofm.create_tracking_id()
  
 
     ansible_facts={ "tracking_id": tracking_id }
@@ -983,6 +968,42 @@ def create_tracking_id(module, ofm):
     module.exit_json(changed=True, path=path)
   except Exception as e:
       module.fail_json(msg=to_native(e), exception="exception")
+
+#Render OneFuse Property Sets
+
+def property_toolkit(module, ofm, onefuse_inputs):
+ 
+    try:
+      response_json = ofm.resolve_properties(module.params['template_properties'])
+    except Exception as err:
+      create_exception(module, onefuse_inputs, err)
+
+    ansible_facts={ "rendered_properties": response_json }
+    
+    response=response_json
+    changed = True
+
+    result = dict(
+      changed=changed,
+      original_message='',
+      message='No Change'
+    )
+
+    module = AnsibleModule(
+      argument_spec=onefuse_inputs,
+      supports_check_mode=True
+    )
+
+    if module.check_mode:
+      module.exit_json(**result)
+
+    result['original_message'] = ''
+    result['message'] = f' OneFuse {module.params["module"]} properties rendered {response_json}'
+
+    if response_json:
+      result['changed'] = changed
+
+    module.exit_json(changed=changed, response=result, ansible_facts=ansible_facts)
 
 # OneFuse Managed object for module does not exists
 
@@ -1081,7 +1102,7 @@ def create_success(module, onefuse_inputs, response_json, ansible_facts):
   if response_json["id"]:
     result['changed'] = changed
 
-  module.exit_json(changed=changed, response=response, ansible_facts=ansible_facts)
+  module.exit_json(changed=changed, response=result, ansible_facts=ansible_facts)
 
 if __name__ == "__main__":
     main()
