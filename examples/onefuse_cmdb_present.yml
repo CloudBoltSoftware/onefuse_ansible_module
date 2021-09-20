@@ -3,35 +3,18 @@
 - name: Create ServiceNow CMDB Record
   hosts: localhost
   gather_facts: false
-  vars:
-    policy_name: linux
-    name: atlpllb001
-    name_suffix: infoblox851.sovlabs.net
-    ip_address: 8.8.8.9
-    template_properties: {
-      nameGroup: 'pp',
-      hostname: 'atlpllb001',
-      nameLocation: 'atl',
-      nameEnv: 'p',
-      nameOS: 'l',
-      nameApp: 'wp',
-      dnsSuffix: 'infoblox851.sovlabs.net',
-      ouGroup: 'PiedPiper',
-      ouEnv: 'PRD',
-      sgEnv: 'prod'
-    }
   tasks:
   - name: Create CMDB CI Record
     onefuse:
      policy_name: '{{ policy_name }}'
      module: cmdb
      state: present
-     tracking_id: '{{ tracking_id  | default(omit) }}'
+     tracking_id: '{{ onefuse_name.trackingId  | default(omit) }}'
      template_properties: {
-      OneFuse_VmNic0.dnsSuffix: '{{ name_suffix }}',
-      OneFuse_VmNic0.hostname: '{{ name }}',
+      OneFuse_VmNic0.dnsSuffix: '{{ onefuse_ipam.dnsSuffix }}',
+      OneFuse_VmNic0.hostname: '{{ onefuse_ipam.hostname }}',
       OneFuse_VmNic0.fqdn: '',
-      OneFuse_VmNic0.ipAddress: '{{ ip_address }}',
+      OneFuse_VmNic0.ipAddress: '{{ onefuse_ipam.ipAddress }}',
       OneFuse_VmHardware.platformUuid: '',
       OneFuse_VmHardware.cpuCount: '2',
       OneFuse_VmHardware.totalStorageGB: '16',
@@ -47,5 +30,3 @@
     set_stats:
         data:
          onefuse_cmdb: '{{ onefuse_cmdb }}'
-         onefuse_cmdb_id: '{{ onefuse_cmdb_id }}'
-         tracking_id: '{{ tracking_id }}'

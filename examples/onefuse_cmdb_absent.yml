@@ -4,7 +4,7 @@
   tasks:
   - name: Remove CMDB Record
     onefuse:
-      object_name: '{{ onefuse_cmdb_id | default(omit) }}'
+      object_name: '{{ onefuse_cmdb.id | default(omit) }}'
       module: cmdb
       state: absent
     delegate_to: localhost

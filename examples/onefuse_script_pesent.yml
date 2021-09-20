@@ -1,44 +1,14 @@
 - name: OneFuse Scripting
   hosts: localhost
   gather_facts: false
-  vars:
-    policy_name: add_ad_user
-    username: sstest90
-    firstname: sidtest
-    lastname: testsid
-    hostname: pp-atlplwp190
-    name_suffix: infoblox851.sovlabs.net
-    template_properties: {
-      nameGroup: 'pp',
-      hostname: 'atlpllb001',
-      nameLocation: 'atl',
-      nameEnv: 'p',
-      nameOS: 'l',
-      nameApp: 'wp',
-      dnsSuffix: 'infoblox851.sovlabs.net',
-      ouGroup: 'PiedPiper',
-      ouEnv: 'PRD',
-      sgEnv: 'prod'
-    }
   tasks:
   - name: Execute Script
     onefuse:
       policy_name: '{{ policy_name }}'
       module: scripting
       state: present
-      tracking_id: '{{ tracking_id  | default(omit) }}'
-      template_properties: {
-       nameGroup: 'pp',
-       hostname: '{{ hostname }}.{{ name_suffix }}',
-       nameLocation: 'atl',
-       nameEnv: 'p',
-       nameOS: 'l',
-       nameApp: 'wp',
-       dnsSuffix: '{{ name_suffix }}',
-       username: '{{  username }}',
-       firstname: '{{  firstname }}',
-       lastname: '{{  lastname }}'
-        }
+      tracking_id: '{{ onefuse_name.trackingId  | default(omit) }}'
+      template_properties: '{{ template_properties }}'
     delegate_to: localhost
     register: output
  

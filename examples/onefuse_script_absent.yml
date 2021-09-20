@@ -4,7 +4,7 @@
   tasks:
   - name: Deprovision Script Deployment
     onefuse:
-      object_name: '{{ onefuse_script_id | default(omit) }}'
+      object_name: '{{ onefuse_script.id | default(omit) }}'
       module: scripting
       state: absent
     delegate_to: localhost

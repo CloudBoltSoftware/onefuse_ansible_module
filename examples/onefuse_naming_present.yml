@@ -1,20 +1,6 @@
 - name: Machine Name
   hosts: localhost
   gather_facts: false
-  vars:
-    policy_name: machine
-    template_properties: {
-      nameGroup: 'pp',
-      hostname: '{{ name | default(omit) }}',
-      nameLocation: 'atl',
-      nameEnv: 'p',
-      nameOS: 'l',
-      nameApp: 'wp',
-      dnsSuffix: 'infoblox851.sovlabs.net',
-      ouGroup: 'PiedPiper',
-      ouEnv: 'PRD',
-      sgEnv: 'prod'
-    }
   tasks:
   - name: Get Machine Name
     onefuse:
@@ -28,21 +14,10 @@
   - name: Output Results
     debug:
       msg: '{{ output }}'
-  - name: "Set Stats"
+  - name: "Pass Output to workflow"
     set_stats:
         data:
           onefuse_name: '{{ onefuse_name }}'
-          name: '{{ name }}'
-          name_Suffix: '{{ name_suffix }}'
-          fqdn: '{{ fqdn }}'
-          onefuse_name_id: '{{ onefuse_name_id }}'
-          tracking_id: '{{ tracking_id }}'
-
-
-
-
-
-
 
 
 

@@ -4,7 +4,7 @@
   tasks:
   - name: Remove Ansible Tower Object
     onefuse:
-      object_name: '{{ onefuse_ansible_id | default(omit) }}'
+      object_name: '{{ onefuse_ansible_tower.id | default(omit) }}'
       module: ansible_tower
       state: absent
     delegate_to: localhost

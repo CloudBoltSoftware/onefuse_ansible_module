@@ -4,7 +4,7 @@
   tasks:
   - name: Remove DNS Record
     onefuse:
-      object_name: '{{ onefuse_dns_id | default(omit) }}'
+      object_name: '{{ onefuse_dns.id | default(omit) }}'
       module: dns
       state: absent
     delegate_to: localhost

@@ -4,7 +4,7 @@
   tasks:
   - name: Deprovision Ad Computer Object
     onefuse:
-      object_name: '{{ onefuse_ad_id | default(omit) }}'
+      object_name: '{{ onefuse_ad.id | default(omit) }}'
       module: ad
       state: absent
     delegate_to: localhost

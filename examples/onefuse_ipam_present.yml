@@ -1,29 +1,14 @@
 - name: OneFuse IPAM
   hosts: localhost
   gather_facts: false
-  vars:
-    policy_name: atlprod
-    name: atlpllb001
-    template_properties: {
-      nameGroup: 'pp',
-      hostname: '{{ name | default(omit) }}',
-      nameLocation: 'atl',
-      nameEnv: 'p',
-      nameOS: 'l',
-      nameApp: 'wp',
-      dnsSuffix: 'infoblox851.sovlabs.net',
-      ouGroup: 'PiedPiper',
-      ouEnv: 'PRD',
-      sgEnv: 'prod'
-    }
   tasks:
   - name: Get IP Address
     onefuse:
       policy_name: '{{ policy_name }}'
       module: ipam
       state: present
-      name: '{{ name }}'
-      tracking_id: '{{ tracking_id | default(omit) }}'
+      name: '{{ onefuse_name.name }}'
+      tracking_id: '{{ onefuse_name.trackingId | default(omit) }}'
       template_properties: '{{ template_properties }}'
     register: output
   - name: Output Results
@@ -33,17 +18,6 @@
     set_stats:
         data:
          onefuse_ipam: '{{ onefuse_ipam }}'
-         ip_address: '{{ ip_address }}'
-         netmask: '{{ netmask }}'
-         gateway: '{{ gateway }}'
-         subnet: '{{ subnet }}'
-         network: '{{ network }}'
-         dns_suffix: '{{ dns_suffix }}'
-         dns_search_suffixes: '{{ dns_search_suffixes }}'
-         onefuse_ipam_id: '{{ onefuse_ipam_id }}'
-         primary_dns: '{{ primary_dns }}'
-         secondary_dns: '{{ secondary_dns }}'
-         tracking_id: '{{ tracking_id }}'
 
 
 

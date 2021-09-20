@@ -1,34 +1,16 @@
 - name: OneFuse DNS
   hosts: localhost
   gather_facts: false
-  vars:
-    policy_name: prod
-    name: atlpllb001
-    ip_address: 10.30.29.179
-    zones: infoblox851.sovlabs.net
-    name_suffix: infoblox851.sovlabs.net
-    template_properties: {
-      nameGroup: 'pp',
-      hostname: 'atlpllb001',
-      nameLocation: 'atl',
-      nameEnv: 'p',
-      nameOS: 'l',
-      nameApp: 'wp',
-      dnsSuffix: 'infoblox851.sovlabs.net',
-      ouGroup: 'PiedPiper',
-      ouEnv: 'PRD',
-      sgEnv: 'prod'
-    }
   tasks:
   - name: Register DNS
     onefuse:
       policy_name: '{{ policy_name }}'
       module: dns
       state: present
-      name: '{{ name }}'
-      value: '{{ ip_address }}'
-      zones: '{{ name_suffix }}'
-      tracking_id: '{{ tracking_id | default(omit) }}'
+      name: '{{ onefuse_name.name }}'
+      value: '{{ onefuse_ipam.ipAddress }}'
+      zones: '{{ onefuse_ipam.dnsSuffix }}'
+      tracking_id: '{{ onefuse_name.trackingId | default(omit) }}'
       template_properties: '{{ template_properties }}'
     delegate_to: localhost
     register: output
@@ -39,11 +21,3 @@
     set_stats:
         data:
          onefuse_dns: '{{ onefuse_dns }}'
-         onefuse_dns_id: '{{ onefuse_dns_id }}'
-         tracking_id: '{{ tracking_id }}'
-
-
-
-
-
-

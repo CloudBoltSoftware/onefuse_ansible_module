@@ -25,7 +25,7 @@
       state: present
       limit: ''
       hosts: ''
-      tracking_id: '{{ tracking_id  | default(omit) }}'
+      tracking_id: '{{ onefuse_name.trackingId  | default(omit) }}'
       template_properties: {
        nameGroup: 'pp',
        nameLocation: 'atl',
@@ -42,5 +42,3 @@
     set_stats:
         data:
          onefuse_ansible_tower: '{{ onefuse_ansible_tower }}'
-         onefuse_ansible_tower_id: '{{ onefuse_ansible_tower_id }}'
-         tracking_id: '{{ tracking_id }}'

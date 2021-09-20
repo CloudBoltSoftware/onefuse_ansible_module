@@ -4,7 +4,7 @@
   tasks:
   - name: Reclaim IP Address
     onefuse:
-      object_name: '{{ onefuse_ipam_id | default(omit) }}'
+      object_name: '{{ onefuse_ipam.id | default(omit) }}'
       module: ipam
       state: absent
     delegate_to: localhost

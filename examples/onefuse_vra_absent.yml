@@ -4,7 +4,7 @@
   tasks:
   - name: Deprovision vRA Deployment
     onefuse:
-      object_name: '{{ onefuse_vra_id | default(omit) }}'
+      object_name: '{{ onefuse_vra.id | default(omit) }}'
       module: vra
       state: absent
     delegate_to: localhost
