@@ -3,20 +3,6 @@
 - name: OneFuse Ansible Tower
   hosts: localhost
   gather_facts: false
-  vars:
-    policy_name: Ansible_Onefuse_Dev_Policy
-    template_properties: {
-      nameGroup: 'pp',
-      hostname: 'atlpllb001',
-      nameLocation: 'atl',
-      nameEnv: 'p',
-      nameOS: 'l',
-      nameApp: 'wp',
-      dnsSuffix: 'infoblox851.sovlabs.net',
-      ouGroup: 'PiedPiper',
-      ouEnv: 'PRD',
-      sgEnv: 'prod'
-    }
   tasks:
   - name: Run Ansible Tower Playbook
     onefuse:

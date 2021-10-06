@@ -1,0 +1,19 @@
+# Move AD Computer Object to final
+
+- name: AD
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Move_ad Computer Object
+    onefuse:
+      object_id: '{{ onefuse_ad.id | default(omit) }}'
+      module: ad
+      state: final_ou
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+
+
+

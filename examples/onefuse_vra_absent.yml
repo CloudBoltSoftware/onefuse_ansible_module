@@ -1,5 +1,5 @@
 - name: OneFuse vRA
-  hosts: '{{ ansible_host }}'
+  hosts: '{{ ansible_hosts }}'
   gather_facts: false
   tasks:
   - name: Deprovision vRA Deployment

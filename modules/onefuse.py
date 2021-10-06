@@ -288,6 +288,7 @@ def main():
     "template_properties": {"required": False, "type": "dict"},
     "tracking_id": {"required": False, "type": "str"},
     "object_name": {"required": False, "type": "str"},
+    "object_id": {"required": False, "type": "int"},
     "module": {"required": False, "type": "str"},
     "value": {"required": False, "type": "str"},
     "name": {"required": False, "type": "str"},
@@ -591,20 +592,20 @@ def ad(module, ofm, onefuse_inputs, resource_path, unique_field):
   def final_ou(module, ofm, onefuse_inputs):
 
     try:
-      ad_move = ofm.move_ou(od_id=module.params["object_name"])
+      response_json = ofm.move_ou(module.params["object_id"])
     except Exception as err:
       create_exception(module, onefuse_inputs, err)
 
-    ansible_facts={ "onefuse_ad": ad_move}
+    ansible_facts={ "ad_ou": response_json}
 
-    create_success(module, onefuse_inputs, ad_move, ansible_facts)
+    create_success(module, onefuse_inputs, response_json, ansible_facts)
 
   try:
     if module.params['state'] == 'absent':
       absent(module, ofm, onefuse_inputs, resource_path, unique_field)
     elif module.params['state'] == 'present':
       present(module, ofm, onefuse_inputs)
-    elif module.params['state'] == 'move_ou':
+    elif module.params['state'] == 'final_ou':
       final_ou(module, ofm, onefuse_inputs)
     else:
       print("A OneFuse State with the name " + module.params['module'] + " does not exists!")
@@ -1022,7 +1023,7 @@ def property_toolkit(module, ofm, onefuse_inputs):
 
 # OneFuse Managed object for module does not exists
 
-def remove_exception(module, onefuse_inputs):
+def remove_exception(module, onefuse_inputs, error):
   result = dict(
   changed=False,
   original_message='',

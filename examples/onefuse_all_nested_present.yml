@@ -1,12 +1,20 @@
 # OneFuse Module Provision
 
 #Generate name (OneFuse)
-- name: OneFuse Naming
+- name: OneFuse Machine Name
   import_playbook: onefuse_naming_prov.yml
   vars:
-     policy_name: '{{ naming_policy_name }}'
+     policy_name: '{{ machine_policy_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
-  when: naming_policy_name is defined
+  when: machine_policy_name is defined
+
+#Generate name (OneFuse)
+- name: OneFuse Deployment Name
+  import_playbook: onefuse_naming_prov.yml
+  vars:
+     policy_name: '{{ deployment_policy_name }}'
+     tracking_id: '{{ onefuse_tracking_id }}'
+  when: deployment_policy_name is defined
 
 # Get IP Address (OneFuse)
 - name: OneFuse IPAM
@@ -60,13 +68,22 @@
      tracking_id: '{{ onefuse_tracking_id }}'
   when: ansible_script_name is defined
 
-# Run OneFuse vRA (OneFuse)
+  # Move Computer Object in Active Directory to Final (OneFuse)
+- name: OneFuse AD
+  import_playbook: onefuse_ad_move.yml
+  vars:
+     tracking_id: '{{ onefuse_tracking_id }}'
+  when: ad_move_final is defined
+
+# Run OneFuse vRA & OneFuse naming for deployment Name (OneFuse)
+
 - name: OneFuse run vRA provisioning
   import_playbook: onefuse_vra_prov.yml
   vars:
-     policy_name: '{{ ansible_vra_name }}'
+     policy_name: '{{ vra_policy_name }}'
+     deployment_policy_name: '{{ deployment_policy_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
-  when: ansible_vra_name is defined
+  when: vra_policy_name is defined
 
 # Create host in Ansible Inventory (Ansible)
 - name: Create Ansible Host

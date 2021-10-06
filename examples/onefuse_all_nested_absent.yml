@@ -3,7 +3,7 @@
 # Deprovision name (OneFuse)
 - name: Destroy OneFuse Naming
   import_playbook: onefuse_naming_deprov.yml
-  when: onefuse_name is defined
+  when: onefuse_name_machine is defined
 
 # Deprovision IP Address (OneFuse)
 - name: Destroy OneFuse IPAM
@@ -38,7 +38,7 @@
 # Deprovision Script execution (OneFuse)
 - name: OneFuse run scripting deprovision
   import_playbook: onefuse_script_deprov.yml
-  when: onefuse_scripting is defined
+  when: onefuse_script is defined
 
 # Deprovision vRA execution (OneFuse)
 - name: OneFuse run vradeprovision

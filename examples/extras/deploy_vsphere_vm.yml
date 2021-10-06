@@ -1,0 +1,56 @@
+#Deploy VM
+
+- name: Deploy vSphere VM
+  hosts: localhost
+  gather_facts: false
+  vars:
+    vcenter_server: "vcenter01.sovlabs.net"
+    vcenter_user: "ssmith@sovlabs.net"
+    vcenter_pass: "S!dn#y1104!"
+    datacenter_name: "SovLabs"
+    cluster_name: "Cluster1"
+  tasks:
+  - name: Get OneFuse Template_Properties
+    onefuse:
+      module: property_toolkit
+      template_properties: '{{ template_properties }}'
+    delegate_to: localhost
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+  - name: "Pass Output to workflow"
+    set_stats:
+        data:
+          template_properties: '{{ rendered_properties }}'
+  - name: Clone the template
+    vmware_guest:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      name: "{{ onefuse_name_machine.name }}"
+      template: "{{ rendered_properties.template }}"
+      datacenter: "{{ datacenter_name }}"
+      folder: /{{ datacenter_name }}/vm
+      cluster: "{{ cluster_name }}"
+      datastore: "CB_Nimble"
+      networks:
+      - name: "{{onefuse_ipam.network}}"
+        ip: "{{ onefuse_ipam.ipAddress }}"
+        netmask: "{{onefuse_ipam.netmask}}"
+        gateway: "{{onefuse_ipam.gateway}}"
+        type: static
+        dns_servers: "{{onefuse_ipam.primaryDns}}"
+      customization:
+        hostname: "{{ onefuse_ipam.hostname }}"
+        dns_servers:
+        - "{{onefuse_ipam.primaryDns}}"
+        - "{{onefuse_ipam.secondaryDns}}"
+      state: poweredon
+      wait_for_ip_address: yes
+    delegate_to: localhost
+    register: vm_output
+  - name: Output Results
+    debug:
+      msg: '{{ vm_output }}'

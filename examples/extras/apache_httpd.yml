@@ -1,0 +1,38 @@
+- name: To install an httpd webserver
+  hosts: '{{ ansible_hosts }}'
+  tasks:
+  - name: Install httpd packages 
+    yum:
+      name: httpd
+      state: present
+  - name: start httpd
+    service:
+      name: httpd 
+      state: started
+  - name: enable httpd
+    service:
+      name: httpd 
+      enabled: yes
+  - name: create a file
+    file:
+      path: "/var/www/html/index.html"
+      state: touch
+  - name: adding contents to indexfile
+    blockinfile:
+      dest: /var/www/html/index.html
+      block: |
+        <html>
+        <center><h1> Welcome to Codeless integrations with OneFuse </h1></center>
+        <br><br>
+        <table>
+          <tr>
+            <td> Server Information </td>
+          </tr>
+          <tr>
+            <td> Name '{{ OneFuse_Ipam_Nic0.hostname }}' </td>
+          </tr>
+          <tr>
+            <td> IP Address '{{ OneFuse_Ipam_Nic0.ipAddress }}'</td>
+          </tr>
+        </table>
+        </html>

@@ -1,0 +1,34 @@
+# Destroy VM
+
+- name: Remove VM
+  hosts: '{{ ansible_hosts }}'
+  gather_facts: false
+  vars:
+    vcenter_server: "vcenter01.sovlabs.net"
+    vcenter_user: "ssmith@sovlabs.net"
+    vcenter_pass: "S!dn#y1104!"
+    datacenter_name: "SovLabs"
+    cluster_name: "Cluster1"
+  tasks:
+  - name: Set powerstate of a virtual machine to poweroff by using UUID
+    vmware_guest:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      name: "{{ vsphere_vm.instance.hw_name }}"
+      datacenter: "{{ datacenter_name }}"
+      folder: "{{ vsphere_vm.instance.hw_folder }}"
+      cluster: "{{ vsphere_vm.instance.hw_cluster }}"
+      uuid: "{{ vsphere_vm.instance.hw_product_uuid }}"
+      state: poweredoff
+    delegate_to: localhost
+  - name: Remove a virtual machine by uuid
+    vmware_guest:
+      hostname: "{{ vcenter_server }}"
+      username: "{{ vcenter_user }}"
+      password: "{{ vcenter_pass }}"
+      validate_certs: False
+      uuid: "{{ vsphere_vm.instance.hw_product_uuid }}"
+      state: absent
+    delegate_to: localhost

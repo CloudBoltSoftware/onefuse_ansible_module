@@ -1,5 +1,5 @@
 - name: OneFuse Scripting
-  hosts: '{{ ansible_host }}'
+  hosts: '{{ ansible_hosts }}'
   gather_facts: false
   tasks:
   - name: Deprovision Script Deployment

@@ -4,7 +4,7 @@
   tasks:
   - name: Deprovision Name
     onefuse:
-      object_name: '{{ onefuse_name.id | default(omit) }}'
+      object_name: '{{ onefuse_name_machine.id | default(omit) }}'
       module: naming
       state: absent
     delegate_to: localhost

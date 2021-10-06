@@ -9,8 +9,8 @@
      policy_name: '{{ policy_name }}'
      module: ad
      state: present
-     name: '{{ onefuse_name.name }}'
-     tracking_id: '{{ onefuse_name.trackingId  | default(omit) }}'
+     name: '{{ onefuse_name_machine.name }}'
+     tracking_id: '{{ onefuse_name_machine.trackingId  | default(omit) }}'
      template_properties: '{{ template_properties }}'
     register: output
   - name: Output Results
