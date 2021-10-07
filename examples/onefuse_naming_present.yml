@@ -14,7 +14,6 @@
   - name: Output Results
     debug:
       msg: '{{ output }}'
-    when: onefuse_debug is defined
   - name: "Pass Output to workflow"
     set_stats:
       data:
