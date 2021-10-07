@@ -18,7 +18,7 @@
   - name: "Pass Output to workflow"
     set_stats:
       data:
-      onefuse_name_machine: '{{ onefuse_name }}'
+        onefuse_name_machine: '{{ onefuse_name }}'
 
 
 
