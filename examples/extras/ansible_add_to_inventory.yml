@@ -13,7 +13,7 @@
         tower_host: https://localhost
         validate_certs: no
         variables:
-          onefuse_name_machine: '{{ onefuse_name_machine | default(omit) }}'
+          onefuse_name_machine: '{{ onefuse_name | default(omit) }}'
           onefuse_name_deployment: '{{ onefuse_name_deployment| default(omit)  }}'
           onefuse_dns: '{{ onefuse_dns | default(omit) }}'
           onefuse_cmdb: '{{ onefuse_cmdb | default(omit) }}'

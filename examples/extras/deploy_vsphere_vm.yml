@@ -29,7 +29,7 @@
       username: "{{ vcenter_user }}"
       password: "{{ vcenter_pass }}"
       validate_certs: False
-      name: "{{ onefuse_name_machine.name }}"
+      name: "{{ onefuse_name.name }}"
       template: "{{ rendered_properties.template }}"
       datacenter: "{{ datacenter_name }}"
       folder: /{{ datacenter_name }}/vm
