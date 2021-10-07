@@ -21,7 +21,6 @@
     blockinfile:
       dest: /var/www/html/index.html
       block: 
-<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
