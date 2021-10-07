@@ -21,18 +21,18 @@
     blockinfile:
       dest: /var/www/html/index.html
       block: |
-        <html>
+    <html>
         <center><h1> Welcome to Codeless integrations with OneFuse </h1></center>
-        <br><br>
-        <table>
-          <tr>
-            <td> Server Information </td>
+        <br><br><br>
+        <table border=1>
+          <tr border=1>
+            <td border=1> Server Information </td>
           </tr>
-          <tr>
+          <tr border=1>
             <td> Name '{{ OneFuse_Ipam_Nic0.hostname }}' </td>
           </tr>
-          <tr>
-            <td> IP Address '{{ OneFuse_Ipam_Nic0.ipAddress }}'</td>
+          <tr border=1>
+            <td border=1> IP Address '{{ OneFuse_Ipam_Nic0.ipAddress }}'</td>
           </tr>
         </table>
         </html>
