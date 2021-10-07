@@ -20,8 +20,9 @@
   - name: adding contents to indexfile
     blockinfile:
       dest: /var/www/html/index.html
-      block: 
-<html lang="en">
+      block:
+<!doctype html>
+<html lang='en'>
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
