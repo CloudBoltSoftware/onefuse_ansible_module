@@ -20,7 +20,7 @@
   - name: adding contents to indexfile
     blockinfile:
       dest: /var/www/html/index.html
-      block:
+      block: |
 <!doctype html>
 <html lang='en'>
 <head>
