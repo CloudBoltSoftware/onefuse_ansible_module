@@ -2,7 +2,7 @@
 
 #Generate name (OneFuse)
 - name: OneFuse Machine Name
-  import_playbook: onefuse_naming_prov.yml
+  import_playbook: examples/onefuse_naming_prov.yml
   vars:
      policy_name: '{{ machine_policy_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
@@ -10,7 +10,7 @@
 
 #Generate name (OneFuse)
 - name: OneFuse Deployment Name
-  import_playbook: onefuse_naming_prov.yml
+  import_playbook: examples/onefuse_naming_prov.yml
   vars:
      policy_name: '{{ deployment_policy_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
@@ -18,7 +18,7 @@
 
 # Get IP Address (OneFuse)
 - name: OneFuse IPAM
-  import_playbook: onefuse_ipam_prov.yml
+  import_playbook: examples/onefuse_ipam_prov.yml
   vars:
      policy_name: '{{ ipam_policy_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
@@ -26,7 +26,7 @@
 
 # Create DNS Records (OneFuse)
 - name: OneFuse DNS
-  import_playbook: onefuse_dns_prov.yml
+  import_playbook: examples/onefuse_dns_prov.yml
   vars:
      policy_name: '{{ dns_policy_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
@@ -34,7 +34,7 @@
 
 # Create Computer Object in Active Directory (OneFuse)
 - name: OneFuse AD
-  import_playbook: onefuse_ad_prov.yml
+  import_playbook: examples/onefuse_ad_prov.yml
   vars:
      policy_name: '{{ ad_policy_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
@@ -42,11 +42,11 @@
 
 # Deploy vSphere VM (vSphere)
 - name: vSphere VM
-  import_playbook: deploy_vsphere_vm.yml
+  import_playbook: examples/extras/deploy_vsphere_vm.yml
 
 # Create ServiceNow CMDB CI Record (OneFuse)
 - name: OneFuse ServiceNow CMDB CI Record
-  import_playbook: onefuse_cmdb_prov.yml
+  import_playbook: examples/onefuse_cmdb_prov.yml
   vars:
      policy_name: '{{ cmdb_policy_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
@@ -54,7 +54,7 @@
 
 # Run Ansible Tower Job Template (OneFuse)
 - name: OneFuse run Ansible Tower Job Template
-  import_playbook: onefuse_ansible_prov.yml
+  import_playbook: examples/onefuse_ansible_prov.yml
   vars:
      policy_name: '{{ ansible_policy_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
@@ -62,7 +62,7 @@
 
 # Run OneFuse Script (OneFuse)
 - name: OneFuse run script provisioning
-  import_playbook: onefuse_script_prov.yml
+  import_playbook: examples/onefuse_script_prov.yml
   vars:
      policy_name: '{{ ansible_script_name }}'
      tracking_id: '{{ onefuse_tracking_id }}'
@@ -70,7 +70,7 @@
 
   # Move Computer Object in Active Directory to Final (OneFuse)
 - name: OneFuse AD
-  import_playbook: onefuse_ad_move.yml
+  import_playbook: examples/onefuse_ad_move.yml
   vars:
      tracking_id: '{{ onefuse_tracking_id }}'
   when: ad_move_final is defined
@@ -78,7 +78,7 @@
 # Run OneFuse vRA & OneFuse naming for deployment Name (OneFuse)
 
 - name: OneFuse run vRA provisioning
-  import_playbook: onefuse_vra_prov.yml
+  import_playbook: examples/onefuse_vra_prov.yml
   vars:
      policy_name: '{{ vra_policy_name }}'
      deployment_policy_name: '{{ deployment_policy_name }}'
@@ -87,5 +87,5 @@
 
 # Create host in Ansible Inventory (Ansible)
 - name: Create Ansible Host
-  import_playbook: ansible_add_to_inventory.yml
+  import_playbook: examples/extras/ansible_add_to_inventory.yml
   when: create_inventory is defined
