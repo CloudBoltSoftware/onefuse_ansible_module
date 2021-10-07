@@ -21,288 +21,288 @@
     blockinfile:
       dest: /var/www/html/index.html
       block: |
-<!doctype html>
-<html lang='en'>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <!doctype html>
+        <html lang='en'>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- OneFuse -->
-	<meta name="author" content="OneFuse">
-	<link rel="shortcut icon" type="image/png" href="https://docs.cloudbolt.io/resources/Storage/onefuse/SovLabs-Logo-Color-Mobile.svg"/>
+          <!-- OneFuse -->
+          <meta name="author" content="OneFuse">
+          <link rel="shortcut icon" type="image/png" href="https://docs.cloudbolt.io/resources/Storage/onefuse/SovLabs-Logo-Color-Mobile.svg"/>
 
-	<!-- Material Design Icons -->
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.2.95/css/materialdesignicons.min.css" rel="stylesheet">
-	<!-- Bootstrap CSS -->
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
+          <!-- Material Design Icons -->
+          <link href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/6.2.95/css/materialdesignicons.min.css" rel="stylesheet">
+          <!-- Bootstrap CSS -->
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-uWxY/CJNBR+1zjPWmfnSnVxwRheevXITnMqoEIeG1LJrdI0GlVs/9cVSyPYXdcSF" crossorigin="anonymous">
 
-	<!-- Fonts -->
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&amp;display=swap" rel="stylesheet"> 
+          <!-- Fonts -->
+          <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&amp;display=swap" rel="stylesheet"> 
 
-	<!-- Inline CSS -->
-	<style>
-		body {
-			background-color:  #FAFAFA;
-			font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif !important;
-			margin: 0;
-    	height: 100%;
-		}
-		.hero-img {
-			background-repeat: no-repeat;
-	    background-attachment: fixed;
-	    background-position: left bottom;
-	    background-size: cover;
-	    background-image: url(https://onefuse.cloudbolt.io/wp-content/uploads/2021/01/splash.png);
-    	height:  100px;
-		}
-		.logo {
-			width: 200px;
-		}
-		.onefuse-blue {
-			color:  #0E76BC;
-		}
-	</style>
-	<!-- Title -->
-	<title>{{ OneFuse_Ipam_Nic0.hostname }}</title>
-</head>
-<body>
-	<!-- Hero Banner -->
-	<div class="row align-items-center hero-img shadow-sm">
-		<div class="col-2 ms-5">
-			<a href="https://www.cloudbolt.io/onefuse/" target="_blank"><img src="https://docs.cloudbolt.io/resources/Storage/onefuse/OneFuse_logo-white.svg" alt="OneFuse Logo" class="logo"></a>
-		</div>
-		<div class="col text-white">
-			<h5 class="mb-0">Welcome to Codeless Integration with OneFuse</h5>
-		</div>
-		<div class="col justify-content-end text-end me-4">
-			<a class="btn btn-outline-light btn-sm me-1" role="button" href="https://onefuse.cloudbolt.io" target="_blank"><i class="mdi mdi-account-group me-2"></i> Community</a>
-			<a class="btn btn-outline-light btn-sm me-1" role="button" href="https://docs.cloudbolt.io/articles/#!onefuse-latest/what-is-onefuse" target="_blank"><i class="mdi mdi-book-open-outline me-2"></i> Docs</a>
-			<a class="btn btn-outline-light btn-sm me-1" role="button" href="https://app.swaggerhub.com/apis-docs/cloudbolt/OneFuse/" target="_blank"><i class="mdi mdi-api me-2"></i> API</a>
-		</div>
-	</div>
-	<!-- Content -->
-	<div class="container mb-5">
-		<div class="row mt-4 justify-content-center">
-			<div class="col-10 col-xs-12 col-sm-12 col-xl-8">
-				<!-- Overview -->
-			  <div class="card shadow-sm">
-					<div class="card-header">
-						<h5 class="card-title mb-0"><i class="mdi mdi-information me-2"></i> {{ OneFuse_Ipam_Nic0.hostname }}</h5>
-					</div>
-					<div class="card-body">
-						<table class="table table-hover table-borderless table-sm mt-4">
-							<tr>
-								<th>OS Type</th>
-								<td>{{ osType }}</td>
-							</tr>
-							<tr>
-								<th>Image</th>
-								<td>{{ image }}</td>
-							</tr>
-							<tr>
-								<th>Software</th>
-								<td>{{ softwareName }}</td>
-							</tr>
-							<tr>
-								<th>Count</th>
-								<td>{{ count }}</td>
-							</tr>
-						</table>
-					</div>
-					<div class="card-footer">
-						<small>Requested by <b><i class="mdi mdi-account me-1"></i> {{ OneFuse_RequestedBy }}</b> from <b>{{ OneFuse_UpstreamProvider }}</b></small>
-					</div>
-				</div>
-			</div>
-			<!-- OneFuse Modules -->
-			<div class="row mt-5 justify-content-center">
-				<div class="col-10 col-xs-12 col-sm-12 col-xl-8">
-					<h5>OneFuse Modules</h5>
-					<small class="text-secondary"><b>OneFuse Tracking ID:</b> {{ OneFuse_Tracking_Id }}</small>
-					<div class="accordion accordion-flush mt-4">
-						{% if OneFuse_Naming %}
-					  <div class="accordion-item">
-					    <h2 class="accordion-header" id="heading-naming">
-					      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-naming" aria-expanded="true" aria-controls="collapse-naming">
-					        <i class="mdi mdi-label me-2 onefuse-blue mdi-24px"></i> OneFuse Naming
-					      </button>
-					    </h2>
-					    <div id="collapse-naming" class="accordion-collapse collapse show p-4" aria-labelledby="heading-naming">
-								<div class="card">
-							  	<div class="card-header">
-							    	<h5 class="card-title mb-0">{{ OneFuse_Naming.name }}</h5>
-							    </div>
-								  <div class="card-body">
-								    <div class="alert bg-primary bg-opacity-10 mb-2">
-								    	<span class="onefuse-blue"><i class="mdi mdi-label me-1"></i> <b>{{ OneFuse_Naming._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_Naming.endpoint }}</b></span> OneFuse
-								    </div>
-							      <table class="table table-hover table-sm mt-4">
-											<tbody>
-												<tr>
-													<th>Name</th>
-													<td>{{ OneFuse_Naming.name }}</td>
-												</tr>
-												<tr>
-													<th>DNS Suffix</th>
-													<td>{{ OneFuse_Naming.dnsSuffix }}</td>
-												</tr>
-											</tbody>
-										</table>
-								  </div>
-									<div class="card-footer text-muted">
-										<small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_Naming._links.self.href }}</a></small>
-								  </div>
-								</div>
-					    </div>
-					  </div>
-					  {% endif %}
-					  {% if OneFuse_Ipam_Nic0 %}
-					  <div class="accordion-item">
-					    <h2 class="accordion-header" id="heading-ipam-nic0">
-					      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ipam-nic0" aria-expanded="true" aria-controls="collapse-ipam-nic0">
-					        <i class="mdi mdi-ip-network-outline me-2 onefuse-blue mdi-24px"></i> OneFuse IPAM <span class="ms-2 badge bg-primary">NIC 0</span>
-					      </button>
-					    </h2>
-					    <div id="collapse-ipam-nic0" class="accordion-collapse collapse p-4" aria-labelledby="heading-ipam-nic0">
-								<div class="card">
-									<div class="card-header">
-							    	<h5 class="card-title mb-0">{{ OneFuse_Ipam_Nic0.ipAddress }}</h5>
-							    </div>
-								  <div class="card-body">
-								    <div class="alert bg-primary bg-opacity-10 mb-2">
-								    	<span class="onefuse-blue"><i class="mdi mdi-ip-network-outline me-1"></i> <b>{{ OneFuse_Ipam_Nic0._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_Ipam_Nic0.endpoint }}</b></span> OneFuse
-								    </div>
-							      <table class="table table-hover table-sm mt-4">
-											<tbody>
-												<tr>
-													<th>IP Address</th>
-													<td>{{ OneFuse_Ipam_Nic0.ipAddress }}</td>
-												</tr>
-												<tr>
-													<th>DNS Suffix</th>
-													<td>{{ OneFuse_Ipam_Nic0.dnsSuffix }}</td>
-												</tr>
-												<tr>
-													<th>Network</th>
-													<td>{{ OneFuse_Ipam_Nic0.network }}</td>
-												</tr>
-											</tbody>
-										</table>
-								  </div>
-								  <div class="card-footer text-muted">
-										<small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_Ipam_Nic0._links.self.href }}</a></small>
-								  </div>
-								</div>
-					    </div>
-					  </div>
-					  {% endif %}
-					  {% if OneFuse_Dns_Nic0 %}
-					  <div class="accordion-item">
-					    <h2 class="accordion-header" id="heading-dns-nic0">
-					      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-dns-nic0" aria-expanded="true" aria-controls="collapse-dns-nic0">
-					        <i class="mdi mdi-wan me-2 onefuse-blue mdi-24px"></i> OneFuse DNS <span class="ms-2 badge bg-primary">NIC 0</span>
-					      </button>
-					    </h2>
-					    <div id="collapse-dns-nic0" class="accordion-collapse collapse p-4" aria-labelledby="heading-dns-nic0">
-								<div class="card">
-									<div class="card-header">
-							    	<h5 class="card-title mb-0">{{ OneFuse_Dns_Nic0.name }}</h5>
-							    </div>
-								  <div class="card-body">
-								    <div class="alert bg-primary bg-opacity-10 mb-2">
-								    	<span class="onefuse-blue"><i class="mdi mdi-wan me-1"></i> <b>{{ OneFuse_Dns_Nic0._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_Dns_Nic0.endpoint }}</b></span> OneFuse
-								    </div>
-							      <table class="table table-hover table-sm mt-4">
-							      	<thead>
-							      		<tr><th>Type</th><th>Name</th><th>Value</th></tr>
-							      	</thead>
-											<tbody>
-												{% for record in OneFuse_Dns_Nic0.records %}
-												<tr>
-													<td>{{ record.type }}</td>
-													<td>{{ record.name }}</td>
-													<td>{{ record.value }}</td>
-												</tr>
-												{% endfor %}
-											</tbody>
-										</table>
-								  </div>
-								  <div class="card-footer text-muted">
-										<small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_Dns_Nic0._links.self.href }}</a></small>
-								  </div>
-								</div>
-					    </div>
-					  </div>
-					  {% endif %}
-					  {% if OneFuse_AD %}
-					  <div class="accordion-item">
-					    <h2 class="accordion-header" id="heading-msad">
-					      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-msad" aria-expanded="true" aria-controls="collapse-msad">
-					        <i class="mdi mdi-microsoft-windows me-2 onefuse-blue mdi-24px"></i> OneFuse Microsoft Active Directory
-					      </button>
-					    </h2>
-					    <div id="collapse-msad" class="accordion-collapse collapse p-4" aria-labelledby="heading-msad">
-								<div class="card">
-							  	<div class="card-header">
-							    	<h5 class="card-title mb-0">{{ OneFuse_AD.name }}</h5>
-							    </div>
-								  <div class="card-body">
-								    <div class="alert bg-primary bg-opacity-10 mb-2">
-								    	<span class="onefuse-blue"><i class="mdi mdi-microsoft-windows me-1"></i> <b>{{ OneFuse_AD._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_AD.endpoint }}</b></span> OneFuse
-								    </div>
-							      <table class="table table-hover table-sm mt-4">
-											<tbody>
-												<tr>
-													<th>Computer Account</th>
-													<td>{{ OneFuse_AD.name }}</td>
-												</tr>
-												<tr>
-													<th>State</th>
-													<td><span class="badge bg-secondary">{{ OneFuse_AD.state }}</span></td>
-												</tr>
-												<tr>
-													<th>Build OU</th>
-													<td class="font-monospace text-wrap"><small>{{ OneFuse_AD.buildOu }}</small></td>
-												</tr>
-												<tr>
-													<th>Final OU</th>
-													<td class="font-monospace text-wrap"><small>{{ OneFuse_AD.finalOu }}</small></td>
-												</tr>
-												<tr>
-													<th>Security Group(s)</th>
-													<td class="font-monospace text-wrap"><ul>
-														{% for sg in OneFuse_AD.securityGroups %}
-														<li><small>{{ sg }}</small></li>
-														{% endfor %}
-														</ul>
-													</td>
-												</tr>
-											</tbody>
-										</table>
-								  </div>
-									<div class="card-footer text-muted">
-										<small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_Naming._links.self.href }}</a></small>
-								  </div>
-								</div>
-					    </div>
-					  </div>
-					  {% endif %}
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- ICONS
-		- ANSIBLE TOWER ICON			<i class="mdi mdi-ansible me-2 onefuse-blue"></i>
-		- DNS ICON								<i class="mdi mdi-wan me-2 onefuse-blue"></i>
-		- IPAM ICON								<i class="mdi mdi-ip-network-outline me-1"></i>
-		- MS AD ICON							<i class="mdi mdi-microsoft-windows me-2 onefuse-blue"></i>
-		- NAMING ICON							<i class="mdi mdi-label me-2 onefuse-blue"></i>
-		- SCRIPTING ICON					<i class="mdi mdi-script-text me-2 onefuse-blue"></i>
-		- SERVICENOW CMDB ICON		<i class="mdi mdi-database-import me-2 onefuse-blue"></i>
-	-->
+          <!-- Inline CSS -->
+          <style>
+            body {
+              background-color:  #FAFAFA;
+              font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Ubuntu,sans-serif !important;
+              margin: 0;
+              height: 100%;
+            }
+            .hero-img {
+              background-repeat: no-repeat;
+              background-attachment: fixed;
+              background-position: left bottom;
+              background-size: cover;
+              background-image: url(https://onefuse.cloudbolt.io/wp-content/uploads/2021/01/splash.png);
+              height:  100px;
+            }
+            .logo {
+              width: 200px;
+            }
+            .onefuse-blue {
+              color:  #0E76BC;
+            }
+          </style>
+          <!-- Title -->
+          <title>{{ OneFuse_Ipam_Nic0.hostname }}</title>
+        </head>
+        <body>
+          <!-- Hero Banner -->
+          <div class="row align-items-center hero-img shadow-sm">
+            <div class="col-2 ms-5">
+              <a href="https://www.cloudbolt.io/onefuse/" target="_blank"><img src="https://docs.cloudbolt.io/resources/Storage/onefuse/OneFuse_logo-white.svg" alt="OneFuse Logo" class="logo"></a>
+            </div>
+            <div class="col text-white">
+              <h5 class="mb-0">Welcome to Codeless Integration with OneFuse</h5>
+            </div>
+            <div class="col justify-content-end text-end me-4">
+              <a class="btn btn-outline-light btn-sm me-1" role="button" href="https://onefuse.cloudbolt.io" target="_blank"><i class="mdi mdi-account-group me-2"></i> Community</a>
+              <a class="btn btn-outline-light btn-sm me-1" role="button" href="https://docs.cloudbolt.io/articles/#!onefuse-latest/what-is-onefuse" target="_blank"><i class="mdi mdi-book-open-outline me-2"></i> Docs</a>
+              <a class="btn btn-outline-light btn-sm me-1" role="button" href="https://app.swaggerhub.com/apis-docs/cloudbolt/OneFuse/" target="_blank"><i class="mdi mdi-api me-2"></i> API</a>
+            </div>
+          </div>
+          <!-- Content -->
+          <div class="container mb-5">
+            <div class="row mt-4 justify-content-center">
+              <div class="col-10 col-xs-12 col-sm-12 col-xl-8">
+                <!-- Overview -->
+                <div class="card shadow-sm">
+                  <div class="card-header">
+                    <h5 class="card-title mb-0"><i class="mdi mdi-information me-2"></i> {{ OneFuse_Ipam_Nic0.hostname }}</h5>
+                  </div>
+                  <div class="card-body">
+                    <table class="table table-hover table-borderless table-sm mt-4">
+                      <tr>
+                        <th>OS Type</th>
+                        <td>{{ osType }}</td>
+                      </tr>
+                      <tr>
+                        <th>Image</th>
+                        <td>{{ image }}</td>
+                      </tr>
+                      <tr>
+                        <th>Software</th>
+                        <td>{{ softwareName }}</td>
+                      </tr>
+                      <tr>
+                        <th>Count</th>
+                        <td>{{ count }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div class="card-footer">
+                    <small>Requested by <b><i class="mdi mdi-account me-1"></i> {{ OneFuse_RequestedBy }}</b> from <b>{{ OneFuse_UpstreamProvider }}</b></small>
+                  </div>
+                </div>
+              </div>
+              <!-- OneFuse Modules -->
+              <div class="row mt-5 justify-content-center">
+                <div class="col-10 col-xs-12 col-sm-12 col-xl-8">
+                  <h5>OneFuse Modules</h5>
+                  <small class="text-secondary"><b>OneFuse Tracking ID:</b> {{ OneFuse_Tracking_Id }}</small>
+                  <div class="accordion accordion-flush mt-4">
+                    {% if OneFuse_Naming %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="heading-naming">
+                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-naming" aria-expanded="true" aria-controls="collapse-naming">
+                          <i class="mdi mdi-label me-2 onefuse-blue mdi-24px"></i> OneFuse Naming
+                        </button>
+                      </h2>
+                      <div id="collapse-naming" class="accordion-collapse collapse show p-4" aria-labelledby="heading-naming">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5 class="card-title mb-0">{{ OneFuse_Naming.name }}</h5>
+                          </div>
+                          <div class="card-body">
+                            <div class="alert bg-primary bg-opacity-10 mb-2">
+                              <span class="onefuse-blue"><i class="mdi mdi-label me-1"></i> <b>{{ OneFuse_Naming._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_Naming.endpoint }}</b></span> OneFuse
+                            </div>
+                            <table class="table table-hover table-sm mt-4">
+                              <tbody>
+                                <tr>
+                                  <th>Name</th>
+                                  <td>{{ OneFuse_Naming.name }}</td>
+                                </tr>
+                                <tr>
+                                  <th>DNS Suffix</th>
+                                  <td>{{ OneFuse_Naming.dnsSuffix }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="card-footer text-muted">
+                            <small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_Naming._links.self.href }}</a></small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if OneFuse_Ipam_Nic0 %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="heading-ipam-nic0">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-ipam-nic0" aria-expanded="true" aria-controls="collapse-ipam-nic0">
+                          <i class="mdi mdi-ip-network-outline me-2 onefuse-blue mdi-24px"></i> OneFuse IPAM <span class="ms-2 badge bg-primary">NIC 0</span>
+                        </button>
+                      </h2>
+                      <div id="collapse-ipam-nic0" class="accordion-collapse collapse p-4" aria-labelledby="heading-ipam-nic0">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5 class="card-title mb-0">{{ OneFuse_Ipam_Nic0.ipAddress }}</h5>
+                          </div>
+                          <div class="card-body">
+                            <div class="alert bg-primary bg-opacity-10 mb-2">
+                              <span class="onefuse-blue"><i class="mdi mdi-ip-network-outline me-1"></i> <b>{{ OneFuse_Ipam_Nic0._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_Ipam_Nic0.endpoint }}</b></span> OneFuse
+                            </div>
+                            <table class="table table-hover table-sm mt-4">
+                              <tbody>
+                                <tr>
+                                  <th>IP Address</th>
+                                  <td>{{ OneFuse_Ipam_Nic0.ipAddress }}</td>
+                                </tr>
+                                <tr>
+                                  <th>DNS Suffix</th>
+                                  <td>{{ OneFuse_Ipam_Nic0.dnsSuffix }}</td>
+                                </tr>
+                                <tr>
+                                  <th>Network</th>
+                                  <td>{{ OneFuse_Ipam_Nic0.network }}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="card-footer text-muted">
+                            <small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_Ipam_Nic0._links.self.href }}</a></small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if OneFuse_Dns_Nic0 %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="heading-dns-nic0">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-dns-nic0" aria-expanded="true" aria-controls="collapse-dns-nic0">
+                          <i class="mdi mdi-wan me-2 onefuse-blue mdi-24px"></i> OneFuse DNS <span class="ms-2 badge bg-primary">NIC 0</span>
+                        </button>
+                      </h2>
+                      <div id="collapse-dns-nic0" class="accordion-collapse collapse p-4" aria-labelledby="heading-dns-nic0">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5 class="card-title mb-0">{{ OneFuse_Dns_Nic0.name }}</h5>
+                          </div>
+                          <div class="card-body">
+                            <div class="alert bg-primary bg-opacity-10 mb-2">
+                              <span class="onefuse-blue"><i class="mdi mdi-wan me-1"></i> <b>{{ OneFuse_Dns_Nic0._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_Dns_Nic0.endpoint }}</b></span> OneFuse
+                            </div>
+                            <table class="table table-hover table-sm mt-4">
+                              <thead>
+                                <tr><th>Type</th><th>Name</th><th>Value</th></tr>
+                              </thead>
+                              <tbody>
+                                {% for record in OneFuse_Dns_Nic0.records %}
+                                <tr>
+                                  <td>{{ record.type }}</td>
+                                  <td>{{ record.name }}</td>
+                                  <td>{{ record.value }}</td>
+                                </tr>
+                                {% endfor %}
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="card-footer text-muted">
+                            <small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_Dns_Nic0._links.self.href }}</a></small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                    {% if OneFuse_AD %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="heading-msad">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-msad" aria-expanded="true" aria-controls="collapse-msad">
+                          <i class="mdi mdi-microsoft-windows me-2 onefuse-blue mdi-24px"></i> OneFuse Microsoft Active Directory
+                        </button>
+                      </h2>
+                      <div id="collapse-msad" class="accordion-collapse collapse p-4" aria-labelledby="heading-msad">
+                        <div class="card">
+                          <div class="card-header">
+                            <h5 class="card-title mb-0">{{ OneFuse_AD.name }}</h5>
+                          </div>
+                          <div class="card-body">
+                            <div class="alert bg-primary bg-opacity-10 mb-2">
+                              <span class="onefuse-blue"><i class="mdi mdi-microsoft-windows me-1"></i> <b>{{ OneFuse_AD._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_AD.endpoint }}</b></span> OneFuse
+                            </div>
+                            <table class="table table-hover table-sm mt-4">
+                              <tbody>
+                                <tr>
+                                  <th>Computer Account</th>
+                                  <td>{{ OneFuse_AD.name }}</td>
+                                </tr>
+                                <tr>
+                                  <th>State</th>
+                                  <td><span class="badge bg-secondary">{{ OneFuse_AD.state }}</span></td>
+                                </tr>
+                                <tr>
+                                  <th>Build OU</th>
+                                  <td class="font-monospace text-wrap"><small>{{ OneFuse_AD.buildOu }}</small></td>
+                                </tr>
+                                <tr>
+                                  <th>Final OU</th>
+                                  <td class="font-monospace text-wrap"><small>{{ OneFuse_AD.finalOu }}</small></td>
+                                </tr>
+                                <tr>
+                                  <th>Security Group(s)</th>
+                                  <td class="font-monospace text-wrap"><ul>
+                                    {% for sg in OneFuse_AD.securityGroups %}
+                                    <li><small>{{ sg }}</small></li>
+                                    {% endfor %}
+                                    </ul>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          </div>
+                          <div class="card-footer text-muted">
+                            <small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_Naming._links.self.href }}</a></small>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ICONS
+            - ANSIBLE TOWER ICON			<i class="mdi mdi-ansible me-2 onefuse-blue"></i>
+            - DNS ICON								<i class="mdi mdi-wan me-2 onefuse-blue"></i>
+            - IPAM ICON								<i class="mdi mdi-ip-network-outline me-1"></i>
+            - MS AD ICON							<i class="mdi mdi-microsoft-windows me-2 onefuse-blue"></i>
+            - NAMING ICON							<i class="mdi mdi-label me-2 onefuse-blue"></i>
+            - SCRIPTING ICON					<i class="mdi mdi-script-text me-2 onefuse-blue"></i>
+            - SERVICENOW CMDB ICON		<i class="mdi mdi-database-import me-2 onefuse-blue"></i>
+          -->
 
-	<!-- Bootstrap Bundle with Popper -->
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
-</body>
-</html>
+          <!-- Bootstrap Bundle with Popper -->
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
+        </body>
+        </html>
