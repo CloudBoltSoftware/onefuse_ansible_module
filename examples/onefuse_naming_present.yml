@@ -15,9 +15,10 @@
     debug:
       msg: '{{ output }}'
     when: onefuse_debug is defined
-  set_stats:
-        data:
-         onefuse_name_machine: '{{ onefuse_name }}'
+  - name: "Pass Output to workflow"
+    set_stats:
+      data:
+      onefuse_name_machine: '{{ onefuse_name }}'
 
 
 
