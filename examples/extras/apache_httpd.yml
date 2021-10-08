@@ -288,54 +288,54 @@
                       </div>
                     </div>
                     {% endif %}
-                    					  {% if OneFuse_ServiceNowCmdb %}
-					  <div class="accordion-item">
-					    <h2 class="accordion-header" id="heading-msad">
-					      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-msad" aria-expanded="true" aria-controls="collapse-msad">
-					        <i class="mdi mdi-microsoft-windows me-2 onefuse-blue mdi-24px"></i> OneFuse ServiceNow CMDB Module
-					      </button>
-					    </h2>
-					    <div id="collapse-msad" class="accordion-collapse collapse p-4" aria-labelledby="heading-msad">
-								<div class="card">
-							  	<div class="card-header">
-							    	<h5 class="card-title mb-0">{{ OneFuse_Naming.name }}</h5>
-							    </div>
-								  <div class="card-body">
-								    <div class="alert bg-primary bg-opacity-10 mb-2">
-								    	<span class="onefuse-blue"><i class="mdi mdi-microsoft-windows me-1"></i> <b>{{ OneFuse_ServiceNowCmdbPolicy._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_AD.endpoint }}</b></span> OneFuse
-								    </div>
-							      <table class="table table-hover table-sm mt-4">
-											<tbody>
-												<tr>
-													<th>ServiceNow CMDB Class Name</th>
-													<td>{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.ciClassName }}</td>
-												</tr>
-												<tr>
-													<th>cServiceNow CI Record Name</th>
-													<td><span class="badge bg-secondary">{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.ciName }}</span></td>
-												</tr>
-												<tr>
-													<th>ServiceNow CMDB Operation</th>
-													<td class="font-monospace text-wrap"><small>{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.executionDetails.response.result.items.operation }}</small></td>
-												</tr>
-												<tr>
-													<th>ServiceNow CMDB sysID</th>
-													<td class="font-monospace text-wrap"><small>{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.executionDetails.response.result.items.sysID }}</small></td>
-												</tr>
-												<tr>
-													<th>ServiceNow Latest Execution LifeCycle</th>
-													<td class="font-monospace text-wrap"><small>{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.executionDetails.latestExecution.lifecycle }}</small></td>
-												</tr>
-											</tbody>
-										</table>
-								  </div>
-									<div class="card-footer text-muted">
-										<small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_ServiceNowCmdb._links.self.href }}</a></small>
-								  </div>
-								</div>
-					    </div>
-					  </div>
-					  {% endif %}
+                    {% if OneFuse_ServiceNowCmdb %}
+                    <div class="accordion-item">
+                      <h2 class="accordion-header" id="heading-msad">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-msad" aria-expanded="true" aria-controls="collapse-msad">
+                        <i class="mdi mdi-database-import me-2 onefuse-blue"></i> OneFuse ServiceNow CMDB Module
+                      </button>
+                    </h2>
+                    <div id="collapse-msad" class="accordion-collapse collapse p-4" aria-labelledby="heading-msad">
+                      <div class="card">
+                        <div class="card-header">
+                          <h5 class="card-title mb-0">{{ OneFuse_Naming.name }}</h5>
+                        </div>
+                        <div class="card-body">
+                          <div class="alert bg-primary bg-opacity-10 mb-2">
+                            <span class="onefuse-blue"><i class="mdi mdi-microsoft-windows me-1"></i> <b>{{ OneFuse_ServiceNowCmdbPolicy._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_AD.endpoint }}</b></span> OneFuse
+                          </div>
+                          <table class="table table-hover table-sm mt-4">
+                            <tbody>
+                              <tr>
+                                <th>ServiceNow CMDB Class Name</th>
+                                <td>{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.ciClassName }}</td>
+                              </tr>
+                              <tr>
+                                <th>cServiceNow CI Record Name</th>
+                                <td><span class="badge bg-secondary">{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.ciName }}</span></td>
+                              </tr>
+                              <tr>
+                                <th>ServiceNow CMDB Operation</th>
+                                <td class="font-monospace text-wrap"><small>{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.executionDetails.response.result.items.operation }}</small></td>
+                              </tr>
+                              <tr>
+                                <th>ServiceNow CMDB sysID</th>
+                                <td class="font-monospace text-wrap"><small>{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.executionDetails.response.result.items.sysID }}</small></td>
+                              </tr>
+                              <tr>
+                                <th>ServiceNow Latest Execution LifeCycle</th>
+                                <td class="font-monospace text-wrap"><small>{{ OneFuse_ServiceNowCmdb.configurationItemsInfo.executionDetails.latestExecution.lifecycle }}</small></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                        <div class="card-footer text-muted">
+                          <small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_ServiceNowCmdb._links.self.href }}</a></small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
                   </div>
                 </div>
               </div>
