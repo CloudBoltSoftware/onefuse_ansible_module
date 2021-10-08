@@ -150,7 +150,7 @@
                             </table>
                           </div>
                           <div class="card-footer text-muted">
-                            <small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_Naming._links.self.href }}</a></small>
+                            <small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">https://selab-1f-dev-1-4.cblabsales.net{{ OneFuse_Naming._links.self.href }}</a></small>
                           </div>
                         </div>
                       </div>
