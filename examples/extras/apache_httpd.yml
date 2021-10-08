@@ -302,7 +302,7 @@
                         </div>
                         <div class="card-body">
                           <div class="alert bg-primary bg-opacity-10 mb-2">
-                            <span class="onefuse-blue"><i class="mdi mdi-microsoft-windows me-1"></i> <b>{{ OneFuse_ServiceNowCmdbPolicy._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_AD.endpoint }}</b></span> OneFuse
+                            <span class="onefuse-blue"><i class="mdi mdi-microsoft-windows me-1"></i> <b>{{ OneFuse_ServiceNowCmdb._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_AD.endpoint }}</b></span> OneFuse
                           </div>
                           <table class="table table-hover table-sm mt-4">
                             <tbody>
