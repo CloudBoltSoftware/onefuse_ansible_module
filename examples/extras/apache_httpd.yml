@@ -305,20 +305,18 @@
                             <span class="onefuse-blue"><i class="mdi mdi-wan me-1"></i> <b>{{ OneFuse_ServiceNowCmdb._links.policy.title }}</b></span> Policy on <span class="onefuse-blue"><b>{{ OneFuse_ServiceNowCmdb.endpoint }}</b></span> OneFuse
                           </div>
                           <table class="table table-hover table-sm mt-4">
-                            <thead>
-                                              <tr><th>Class Name</th>><th>Record Name</th><th>Operation</th<th>System ID</th></tr>
-                            </thead>
-                            <tbody>
-                              {% for items in OneFuse_ServiceNowCmdb.executionDetails.response.result.items %}
-                                                      <tr>
-                                                          <td>{{ items.className }}</td>
-                                                          <td>{{ OneFuse_Naming.name }}</td>
-                                                          <td>{{ items.operation }}</td>
-                                                          <td>{{ items.sysId }}</td>
-                                                      </tr>
-                                                      {% endfor %}
-                            </tbody>
-                          </table>
+                          <thead>
+                            <tr><th>Class Name</th><th>CI Name</th><th>Value</th></tr>
+                          </thead>
+                          <tbody>
+                            {% for ci in OneFuse_ServiceNowCmdb.configurationItemsInfo %}
+                            <tr>
+                              <td>{{ ci.ciClassName }}</td>
+                              <td>{{ ci.ciName }}</td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table> 
                         </div>
                         <div class="card-footer text-muted">
                                           <small><i class="mdi mdi-link me-1"></i> <a href="" target="_blank">{{ OneFuse_ServiceNowCmdb._links.self.href }}</a></small>
