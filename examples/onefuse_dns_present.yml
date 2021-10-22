@@ -4,7 +4,7 @@
   tasks:
   - name: Register DNS
     onefuse:
-      policy_name: '{{ policy_name }}'
+      policy_name: '{{ dns_policy_name }}'
       module: dns
       state: present
       name: '{{ onefuse_name.name }}'
