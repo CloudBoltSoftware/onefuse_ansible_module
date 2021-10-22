@@ -9,7 +9,6 @@
         policy_name: '{{ policy_name }}'
         tracking_id: '{{ tracking_id }}'
         template_properties: '{{ template_properties }}'
-      state: present
       tower_username: admin
       tower_password: VmwareS0v
       tower_host: https://localhost
