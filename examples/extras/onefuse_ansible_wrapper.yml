@@ -4,7 +4,7 @@
   tasks:  
   - name: Launch Workflow
     tower_workflow_launch:
-      workflow_template: '{{ ansible_workflow_template }}'
+      workflow_template: "{{ ansible_workflow_template }}"
       extra_vars:
         policy_name: '{{ policy_name }}'
         tracking_id: '{{ tracking_id | default(omit) }}'
@@ -14,4 +14,3 @@
       tower_host: https://localhost
       validate_certs: no
     delegate_to: localhost
-    
