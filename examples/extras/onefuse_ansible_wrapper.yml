@@ -9,7 +9,7 @@
         policy_name: '{{ policy_name }}'
         tracking_id: '{{ tracking_id }}'
         template_properties: '{{ template_properties }}'
-      delegate_to: localhost
+    delegate_to: localhost
 
 
 
