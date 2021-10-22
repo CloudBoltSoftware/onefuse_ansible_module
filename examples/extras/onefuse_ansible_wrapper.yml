@@ -9,4 +9,5 @@
       tower_password: VmwareS0v
       tower_host: https://localhost
       validate_certs: no
+      wait: False
     delegate_to: localhost
