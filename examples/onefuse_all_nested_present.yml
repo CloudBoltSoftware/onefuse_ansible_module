@@ -43,6 +43,7 @@
 # Deploy vSphere VM (vSphere)
 - name: vSphere VM
   import_playbook: extras/deploy_vsphere_vm.yml
+  when: deploy_vm is defined
 
 # Create ServiceNow CMDB CI Record (OneFuse)
 - name: OneFuse ServiceNow CMDB CI Record
