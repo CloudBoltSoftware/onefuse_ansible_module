@@ -4,7 +4,7 @@
   tasks:
   - name: Get IP Address
     onefuse:
-      policy_name: '{{ policy_name }}'
+      policy_name: '{{ ipam_policy_name }}'
       module: ipam
       state: present
       name: '{{ onefuse_name.name }}'
