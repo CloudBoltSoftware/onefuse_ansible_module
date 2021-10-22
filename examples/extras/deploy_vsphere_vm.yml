@@ -54,7 +54,7 @@
   - name: Output Results
     debug:
       msg: '{{ vm_output }}'
-    - name: "Pass Output to workflow"
-    set_stats:
-        data:
-         vsphere_vm: '{{ instance }}'
+  - name: "Pass Output to workflow"
+  set_stats:
+      data:
+        vsphere_vm: '{{ instance }}'
