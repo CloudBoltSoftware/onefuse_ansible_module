@@ -9,9 +9,7 @@
         policy_name: {{ policy_name }}
         tracking_id: {{ tracking_id }}
         template_properties: {{ template_properties }}
-      wait: False
       delegate_to: localhost
-      register: workflow_task_info
 
 
 
