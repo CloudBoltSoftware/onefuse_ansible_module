@@ -2,13 +2,13 @@
   hosts: localhost
   gather_facts: false
   tasks:  
-  - name: Launch a Workflow with extra_vars without waiting
+  - name: Launch Workflow
     tower_workflow_launch:
-      workflow_template: "{{ ansible_workflow_template}}
+      workflow_template: '{{ ansible_workflow_template}}'
       extra_vars:
-        policy_name: {{ policy_name }}
-        tracking_id: {{ tracking_id }}
-        template_properties: {{ template_properties }}
+        policy_name: '{{ policy_name }}'
+        tracking_id: '{{ tracking_id }}'
+        template_properties: '{{ template_properties }}'
       delegate_to: localhost
 
 
