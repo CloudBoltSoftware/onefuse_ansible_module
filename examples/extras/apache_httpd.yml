@@ -26,11 +26,8 @@
     firewalld:
       permanent: yes
       immediate: yes
-      service: "{{ item }}"
+      service: http
       state: enabled
-      with_items:
-        - http
-        - https
   - name: create a file
     file:
       path: "/var/www/html/index.html"
