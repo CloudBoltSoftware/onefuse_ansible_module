@@ -17,19 +17,19 @@
     yum:
       name: firewalld
       state: latest
-    - name: start firewalld
-      service:
-        name: firewalld
-        state: started
-        enabled: yes
-      become: yes
-    - name: Open Port 80
-      firewalld:
-        zone: public
-        port: 80/tcp
-        permanent: true
-        state: enabled
-     become: yes
+  - name: start firewalld
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+    become: yes
+  - name: Open Port 80
+    firewalld:
+      zone: public
+      port: 80/tcp
+      permanent: true
+      state: enabled
+   become: yes
   - name: create a file
     file:
       path: "/var/www/html/index.html"
