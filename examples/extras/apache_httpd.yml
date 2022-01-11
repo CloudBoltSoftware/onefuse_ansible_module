@@ -13,6 +13,13 @@
     service:
       name: httpd 
       enabled: yes
+  - name: enable 1234
+    firewalld:
+      zone: public
+      port: 80/tcp
+      permanent: true
+      state: enabled
+    become: yes
   - name: create a file
     file:
       path: "/var/www/html/index.html"
