@@ -13,7 +13,7 @@
     service:
       name: httpd 
       enabled: yes
-  - name: enable 1234
+  - name: Open Port 80
     firewalld:
       zone: public
       port: 80/tcp
