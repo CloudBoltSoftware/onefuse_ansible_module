@@ -23,19 +23,15 @@
       state: started
       enabled: yes
     become: yes
-  - name: FirewallD Open http/https
-     hosts: localhost
-     connection: local
-     tasks:
-      - name: FirewallD rules
-        firewalld:
-          permanent: yes
-          immediate: yes
-          service: "{{ item }}"
-          state: enabled
-        with_items:
-         - http
-         - https
+ - name: FirewallD rules
+   firewalld:
+     permanent: yes
+     immediate: yes
+     service: "{{ item }}"
+     state: enabled
+     with_items:
+       - http
+       - https
   - name: create a file
     file:
       path: "/var/www/html/index.html"
