@@ -13,6 +13,16 @@
     service:
       name: httpd 
       enabled: yes
+- name: Install firewalld
+  yum:
+    name: firewalld
+    state: latest
+  - name: start firewalld
+    service:
+      name: firewalld
+      state: started
+      enabled: yes
+    become: yes
   - name: Open Port 80
     firewalld:
       zone: public
