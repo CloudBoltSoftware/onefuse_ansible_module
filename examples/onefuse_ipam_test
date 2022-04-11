@@ -1,0 +1,22 @@
+- name: OneFuse IPAM
+  hosts: localhost
+  gather_facts: false
+  tasks:
+  - name: Get IP Address
+    onefuse:
+      policy_name: '{{ ipam_policy_name }}'
+      module: ipam
+      state: present
+      name: '{{ onefuse_name.name }}'
+      tracking_id: '{{ onefuse_name.trackingId | default(omit) }}'
+      template_properties: '{{ template_properties }}'
+    register: output
+  - name: Output Results
+    debug:
+      msg: '{{ output }}'
+    debug:
+      msg "{{ output.json | list }}"
+  - name: "Pass Output to workflow"
+    set_stats:
+        data:
+         onefuse_ipam: '{{ onefuse_ipam }}'
