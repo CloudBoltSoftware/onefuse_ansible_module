@@ -13,7 +13,7 @@
     register: output
   - name: Output Results
     debug:
-      msg: '{{ output }}'
+      msg: '{{ output.json }}'
   - name: "Pass Output to workflow"
     set_stats:
         data:
