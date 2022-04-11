@@ -14,9 +14,6 @@
   - name: Output Results
     debug:
       msg: '{{ output }}'
-  - name: JSON Output
-    debug:
-      msg: "{{ output.json | list }}"
   - name: "Pass Output to workflow"
     set_stats:
         data:
