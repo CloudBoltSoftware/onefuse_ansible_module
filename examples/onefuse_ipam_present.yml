@@ -7,7 +7,7 @@
       policy_name: '{{ ipam_policy_name }}'
       module: ipam
       state: present
-      name: '{{ onefuse_name }}'
+      name: '{{ onefuse_name.name }}'
       tracking_id: '{{ onefuse_name.trackingId | default(omit) }}'
       template_properties: '{{ template_properties }}'
     register: output
