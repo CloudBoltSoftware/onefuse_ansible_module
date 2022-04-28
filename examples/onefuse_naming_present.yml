@@ -3,7 +3,7 @@
   gather_facts: false
   tasks:
   - name: Get Machine Name
-    OneFuse_Training:
+    onefuse_training:
       policy_name: '{{ policy_name }}'
       module: naming
       state: present
