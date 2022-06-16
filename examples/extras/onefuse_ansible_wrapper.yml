@@ -5,8 +5,8 @@
   - name: Launch Workflow
     tower_workflow_launch:
       workflow_template: "{{ ansible_workflow_template }}"
-      tower_username: admin
-      tower_password: VmwareS0v
+      tower_username: 
+      tower_password: 
       tower_host: https://localhost
       validate_certs: no
       wait: true
